@@ -1,0 +1,28 @@
+<resources>
+
+    <string name="app_name">Gol a Gol</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_save_score">Gol a Gol - Rabisca aí!!!</string>
+
+    <color name="green">#003300</color>
+    <color name="white">#FFF</color>
+
+    <string name="umazero">1 x 0</string>
+    <string name="banner">Banner</string>
+    <string name="arena">Arena</string>
+
+    <color name="black">#000</color>
+
+    <string name="date">Data</string>
+    <string name="quantity">Quantos gols?</string>
+    <string name="registerScore">Rabisca aí!!</string>
+    <string name="title_activity_confirm_score">Gol a Gol - Confirmação</string>
+    <string name="confirm">[Confirmação]</string>
+    <string name="info">Info</string>
+    <string name="msgQuantityNull">Só faltou falar quantos gols!</string>
+    <string name="textConfirm">vazio</string>
+    <color name="grey">#BBB</color>
+    <string name="close">Close</string>
+
+</resources>

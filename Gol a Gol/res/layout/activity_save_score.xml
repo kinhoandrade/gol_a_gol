@@ -1,0 +1,118 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+	    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <LinearLayout 
+	        android:id="@+id/llHeader"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/white">
+			<ImageView
+			    android:id="@+id/ivBanner"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:src="@drawable/scoreboard" />
+		</LinearLayout>
+
+	    <RelativeLayout
+	        android:id="@+id/rlBody"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_below="@id/llHeader"
+	        android:background="@color/green">
+			
+		    <TextView
+		        android:id="@+id/tvArena"
+		        style="@style/defaultFont"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/arena" />
+	
+		    <Spinner
+		        android:id="@+id/spArena"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_below="@id/tvArena" />	    
+	
+	   	    <TextView
+		        android:id="@+id/tvQuantity"
+		        style="@style/defaultFont"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/spArena"
+		        android:layout_alignLeft="@+id/tvArena"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/quantity" />
+	   	    
+	   	    <EditText 
+		        android:id="@+id/etQuantity"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/tvQuantity"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginRight="10dp"
+		        android:ems="10"
+		        android:inputType="number"/>
+	
+	   	    <TextView
+		        android:id="@+id/tvDate"
+		        style="@style/defaultFont"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/etQuantity"
+		        android:layout_alignLeft="@+id/tvQuantity"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/date" />
+	   	    
+	   	    <DatePicker 
+	   	        android:id="@+id/dpScoreDate"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/tvDate"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp" />
+	   	    
+	   	    <Button 
+		        android:id="@+id/btRegisterScore"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dpScoreDate"
+		        android:layout_alignLeft="@+id/tvDate"
+		        android:layout_marginBottom="10dp"
+		        android:layout_marginTop="20dp"
+		        android:layout_marginRight="10dp"
+		        android:onClick="registerScore"
+		        android:text="@string/registerScore" />
+		        
+	    </RelativeLayout>
+	    
+	    <LinearLayout 
+	        android:id="@+id/llFooter"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_below="@id/rlBody"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:background="@color/green">
+		</LinearLayout>		
+	        
+	</RelativeLayout>
+</ScrollView>
