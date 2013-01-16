@@ -34,13 +34,15 @@ public class ConfirmScore extends Activity {
         tvQuantityConfirm.setText("" + quantity);
         Calendar date = SaveScore.getDate();
         tvDateConfirm.setText(date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.MONTH) + "/" + date.get(Calendar.YEAR));
+
+        String nickname = SaveScore.getNickname();
         
     	if(quantity <= 2){
-    		Toast.makeText(this, "Só " + quantity + "? Que fase hein!", Toast.LENGTH_LONG).show();
+    		Toast.makeText(this, "Só " + quantity + ", " + nickname + "? Que fase hein!", Toast.LENGTH_LONG).show();
     	}else if(quantity == 3){
-    		Toast.makeText(this, "Aqui é assim, marcou 3. Pode pedir a música.", Toast.LENGTH_LONG).show();
+    		Toast.makeText(this, "Aqui é assim, marcou 3. Pede música.", Toast.LENGTH_LONG).show();
     	}else if(quantity > 9){
-    		Toast.makeText(this, "Se isso é estar na pior. Póhan. Que é que é estar bem então!?", Toast.LENGTH_LONG).show();
+    		Toast.makeText(this, quantity + " gols? Póhan. Se isso é estar na pior. Que é que é estar bem então!?", Toast.LENGTH_LONG).show();
     	}
         
         btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
@@ -50,6 +52,13 @@ public class ConfirmScore extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_confirm_score, menu);
         return true;
+    }
+    
+    public void postOnFacebook(View view){
+        switch (view.getId()) {
+        case R.id.ivFacebookLogo:        	
+	    	Toast.makeText(getApplicationContext(), "Publicado com sucesso.", Toast.LENGTH_LONG).show();	    	
+        }
     }
 
     

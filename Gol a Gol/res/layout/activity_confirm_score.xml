@@ -105,18 +105,28 @@
 		        android:layout_below="@id/tvDate"
 		        android:text="@string/date" />
 	         
+	         <ImageView
+			    android:id="@+id/ivFacebookLogo"
+			    android:layout_width="84dp"
+			    android:layout_height="84dp"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:layout_below="@id/tvDateConfirm"
+			    android:layout_centerHorizontal="true"
+			    android:onClick="postOnFacebook"
+			    android:src="@drawable/facebook_logo" />
+
+	         
 	         <Button
-	             android:id="@+id/btClose"
+	            android:id="@+id/btClose"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_below="@id/tvDateConfirm"
+		        android:layout_below="@id/ivFacebookLogo"
 		        android:layout_alignLeft="@+id/tvDateConfirm"
 		        android:layout_marginBottom="10dp"
 		        android:layout_marginTop="20dp"
 		        android:layout_marginRight="10dp"
-		        android:onClick="close"
-		        android:text="@string/close" 	              
-	             />
+		        android:text="@string/close" />
 		        
 	    </RelativeLayout>
 	    

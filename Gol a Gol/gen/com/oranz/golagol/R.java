@@ -17,53 +17,73 @@ public final class R {
         public static final int white=0x7f060001;
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int scoreboard=0x7f020002;
-        public static final int scoreboard2=0x7f020003;
+        public static final int alert=0x7f020000;
+        public static final int facebook_logo=0x7f020001;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int scoreboard=0x7f020004;
+        public static final int scoreboard2=0x7f020005;
     }
     public static final class id {
-        public static final int btClose=0x7f08000a;
-        public static final int btRegisterScore=0x7f08000f;
-        public static final int dpScoreDate=0x7f08000e;
-        public static final int etQuantity=0x7f08000d;
+        public static final int btClose=0x7f080015;
+        public static final int btCloseConfig=0x7f08000b;
+        public static final int btCreateArena=0x7f080006;
+        public static final int btRegisterScore=0x7f08001a;
+        public static final int btRemoveArena=0x7f08000a;
+        public static final int dpScoreDate=0x7f080019;
+        public static final int etArenaConfig=0x7f080005;
+        public static final int etQuantity=0x7f080018;
         public static final int ivBanner=0x7f080001;
-        public static final int llFooter=0x7f08000b;
+        public static final int ivConfig=0x7f080016;
+        public static final int ivFacebookLogo=0x7f080014;
+        public static final int llFooter=0x7f08000c;
         public static final int llHeader=0x7f080000;
-        public static final int menu_settings=0x7f080011;
+        public static final int menu_settings=0x7f08001c;
         public static final int rlBody=0x7f080002;
-        public static final int spArena=0x7f08000c;
-        public static final int tvArena=0x7f080004;
-        public static final int tvArenaConfirm=0x7f080005;
-        public static final int tvConfirm=0x7f080003;
-        public static final int tvDate=0x7f080008;
-        public static final int tvDateConfirm=0x7f080009;
-        public static final int tvQuantity=0x7f080006;
-        public static final int tvQuantityConfirm=0x7f080007;
-        public static final int tvUmAZero=0x7f080010;
+        public static final int rlRemoveArena=0x7f080008;
+        public static final int spArena=0x7f080017;
+        public static final int spArenasConfig=0x7f080009;
+        public static final int tvArena=0x7f08000e;
+        public static final int tvArenaConfig=0x7f080004;
+        public static final int tvArenaConfirm=0x7f08000f;
+        public static final int tvConfig=0x7f080003;
+        public static final int tvConfirm=0x7f08000d;
+        public static final int tvDate=0x7f080012;
+        public static final int tvDateConfirm=0x7f080013;
+        public static final int tvQuantity=0x7f080010;
+        public static final int tvQuantityConfirm=0x7f080011;
+        public static final int tvRemoveArena=0x7f080007;
+        public static final int tvUmAZero=0x7f08001b;
     }
     public static final class layout {
-        public static final int activity_confirm_score=0x7f030000;
-        public static final int activity_save_score=0x7f030001;
+        public static final int activity_config=0x7f030000;
+        public static final int activity_confirm_score=0x7f030001;
+        public static final int activity_save_score=0x7f030002;
     }
     public static final class menu {
-        public static final int activity_confirm_score=0x7f070000;
-        public static final int activity_save_score=0x7f070001;
+        public static final int activity_config=0x7f070000;
+        public static final int activity_confirm_score=0x7f070001;
+        public static final int activity_save_score=0x7f070002;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
         public static final int arena=0x7f050006;
         public static final int banner=0x7f050005;
         public static final int close=0x7f05000f;
+        public static final int configurations=0x7f050011;
         public static final int confirm=0x7f05000b;
         public static final int date=0x7f050007;
         public static final int hello_world=0x7f050001;
         public static final int info=0x7f05000c;
         public static final int menu_settings=0x7f050002;
         public static final int msgQuantityNull=0x7f05000d;
+        public static final int newArena=0x7f050012;
         public static final int quantity=0x7f050008;
         public static final int registerScore=0x7f050009;
+        public static final int remove=0x7f050013;
+        public static final int removeArena=0x7f050014;
         public static final int textConfirm=0x7f05000e;
+        public static final int title_activity_config=0x7f050010;
         public static final int title_activity_confirm_score=0x7f05000a;
         public static final int title_activity_save_score=0x7f050003;
         public static final int umazero=0x7f050004;

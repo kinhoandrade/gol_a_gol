@@ -27,6 +27,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
+        <activity
+            android:name=".Config"
+            android:label="@string/title_activity_config" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oranz.golagol.SaveScore" />
+        </activity>
     </application>
 
 </manifest>
