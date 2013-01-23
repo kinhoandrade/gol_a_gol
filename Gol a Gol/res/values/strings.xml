@@ -26,10 +26,22 @@
     <color name="grey">#BBB</color>
 
     <string name="close">Close</string>
-    <string name="title_activity_config">Config</string>
+    <string name="title_activity_config">Gol a Gol - Configurações</string>
     <string name="configurations">Configurações</string>
     <string name="newArena">Nova Arena</string>
     <string name="remove">Excluir</string>
     <string name="removeArena">Excluir Arena</string>
+    <string name="title_activity_score_report">Gol a Gol - Relatório</string>
+    <string name="reports">Relatórios</string>
+    <string name="total">Total:</string>
+    <string name="last_30_days">Últimos 30 dias:</string>
+    <string name="last_15_days">Últimos 15 dias:</string>
+    <string name="last_7_days">Últimos 7 dias:</string>
+    <string name="create">Criar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">OK</string>
+    <string name="app_id">318684344914920</string>
+    <string name="nickname">Apelido</string>
+    <string name="fullname">Nome Completo</string>
 
 </resources>

@@ -23,14 +23,13 @@
 			    android:src="@drawable/scoreboard" />
 			<ImageView 
 			    android:id="@+id/ivConfig"
-			    android:layout_width="30dp"
-			    android:layout_height="30dp"
+		        style="@style/settingIcon"
 			    android:contentDescription="@string/banner"
 			    android:layout_marginTop="10dp"
 			    android:layout_marginRight="10dp"
 			    android:layout_alignParentRight="true"
 			    android:onClick="openConfig"
-			    android:src="@drawable/alert" />
+			    android:src="@drawable/setting_icon" />
 		</RelativeLayout>
 
 	    <RelativeLayout
@@ -80,7 +79,6 @@
 		        android:layout_centerHorizontal="true"
 		        android:layout_marginTop="5dp"
 		        android:layout_marginRight="10dp"
-		        android:ems="10"
 		        android:inputType="number"/>
 	
 	   	    <TextView

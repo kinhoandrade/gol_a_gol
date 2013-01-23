@@ -8,20 +8,30 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" >
 
-	    <LinearLayout 
+	    <RelativeLayout 
 	        android:id="@+id/llHeader"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="@color/white">
 			<ImageView
 			    android:id="@+id/ivBanner"
-			    android:layout_width="fill_parent"
+			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:contentDescription="@string/banner"
+			    android:layout_centerHorizontal="true"
 			    android:layout_marginTop="10dp"
 			    android:src="@drawable/scoreboard" />
-		</LinearLayout>
-
+			<ImageView 
+			    android:id="@+id/ivConfig"
+		        style="@style/settingIcon"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:layout_marginRight="10dp"
+			    android:layout_alignParentRight="true"
+			    android:onClick="openConfig"
+			    android:src="@drawable/setting_icon" />
+		</RelativeLayout>
+		
 	    <RelativeLayout
 	        android:id="@+id/rlBody"
 	        android:layout_width="fill_parent"
@@ -107,26 +117,35 @@
 	         
 	         <ImageView
 			    android:id="@+id/ivFacebookLogo"
-			    android:layout_width="84dp"
-			    android:layout_height="84dp"
+			    android:layout_width="153dp"
+			    android:layout_height="46dp"
 			    android:contentDescription="@string/banner"
 			    android:layout_marginTop="10dp"
 			    android:layout_below="@id/tvDateConfirm"
 			    android:layout_centerHorizontal="true"
 			    android:onClick="postOnFacebook"
-			    android:src="@drawable/facebook_logo" />
+			    android:src="@drawable/facebook" />
 
 	         
 	         <Button
-	            android:id="@+id/btClose"
+	            android:id="@+id/btOk"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_below="@id/ivFacebookLogo"
-		        android:layout_alignLeft="@+id/tvDateConfirm"
-		        android:layout_marginBottom="10dp"
-		        android:layout_marginTop="20dp"
+		        android:layout_marginTop="10dp"
 		        android:layout_marginRight="10dp"
-		        android:text="@string/close" />
+		        android:layout_marginLeft="10dp"
+		        android:text="@string/ok" />
+	         
+	         <Button
+	            android:id="@+id/btCancel"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/btOk"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:text="@string/cancel" />
 		        
 	    </RelativeLayout>
 	    

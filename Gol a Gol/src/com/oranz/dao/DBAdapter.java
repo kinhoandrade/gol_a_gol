@@ -1,5 +1,7 @@
 package com.oranz.dao;
 
+import java.util.Calendar;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +14,7 @@ public class DBAdapter
 { 
     public static final String KEY_ROWID = "_id";
     public static final String KEY_NICKNAME = "nickname";
+    public static final String KEY_FULLNAME = "fullname";
     public static final String KEY_DATE_CREATED = "date_created";
     public static final String KEY_USER_ID = "user_id";
 
@@ -30,12 +33,14 @@ public class DBAdapter
     private static final String DATABASE_TABLE = "register";
     private static final String DATABASE_TABLE2 = "arena";
     private static final String DATABASE_TABLE3 = "score";
+    private static final String DATABASE_TABLE4 = "friends";
     
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
         "create table if not exists register(_id integer primary key autoincrement, "
         + "nickname text not null," 
+        + "fullname text," 
         + "date_created date not null,"
         + "user_id integer);";
     
@@ -47,7 +52,7 @@ public class DBAdapter
             "create table if not exists score(_id integer primary key autoincrement, "
             + "arena_id integer not null," 
             + "score_quantity integer not null,"
-            + "score_date date not null,"
+            + "score_date datetime not null,"
             + "user_id integer);";
 
     private static final String DATABASE_CREATE4 =
@@ -89,17 +94,21 @@ public class DBAdapter
             Log.w(TAG, "Upgrading database from version " + oldVersion 
                   + " to "
                   + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS register");
-            db.execSQL("DROP TABLE IF EXISTS arena");
-            db.execSQL("DROP TABLE IF EXISTS score");
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
             onCreate(db);
         }
     }    
     
-    public void dropTables(){    	
-        db.execSQL("DROP TABLE IF EXISTS register");
-        db.execSQL("DROP TABLE IF EXISTS arena");
-        db.execSQL("DROP TABLE IF EXISTS score");
+    public void dropTables(){
+    	this.open();
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
+        this.close();
     }
     
     //---opens the database---
@@ -115,26 +124,6 @@ public class DBAdapter
         DBHelper.close();
     }
     
-	public long insertNickname(String nickname){
-    	long retorno = 0;
-    	try{
-    		/*
-	        ContentValues initialValues = new ContentValues();
-	        initialValues.put(KEY_NICKNAME, nickname);
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-			Date date = new Date();
-	        initialValues.put(KEY_DATE_CREATED, dateFormat.format(date));
-	        retorno = db.insert(DATABASE_TABLE, null, initialValues);
-	        */
-    		db.execSQL("INSERT INTO "+DATABASE_TABLE+" (nickname, date_created) VALUES ('"+ nickname +"', datetime()) ");
-        }catch(Exception e){
-        	e.printStackTrace();
-        }finally{
-        	this.close();
-        } 
-        return retorno;
-    }
-	
 	public long insertArena(String nm_arena){
     	long retorno = 0;
     	try{
@@ -163,18 +152,6 @@ public class DBAdapter
     public int deleteAllArenas(){
     	return db.delete(DATABASE_TABLE2, "_id > 0", null);
     }
-
-    public Cursor getNickname() 
-    {
-        return db.query(DATABASE_TABLE, new String[] {
-        		KEY_ROWID, 
-        		KEY_NICKNAME}, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null);
-    }
     
     public Cursor getAllArenas() 
     {
@@ -186,6 +163,85 @@ public class DBAdapter
                 null, 
                 null, 
                 null);
+    }
+    
+    public int getArenaId(String nm_arena){
+    	Cursor cursor = null;
+    	try{
+    		int id_arena = 0;
+    		this.open();
+	    	cursor = db.rawQuery("SELECT * FROM arena WHERE TRIM(nm_arena) = '" + nm_arena.trim() + "'", null);
+	    	cursor.moveToFirst();
+	    	while (cursor.isAfterLast() == false){ 
+		    	id_arena = cursor.getInt(cursor.getColumnIndex("_id"));
+	    		cursor.moveToNext();
+	    	}
+	    	cursor.close();
+	    	return id_arena;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}finally{
+    		cursor.close();
+    		this.close();
+    	}
+    	return 0;
+    }
+
+	public long insertNickname(String nickname, String fullname){
+    	long retorno = 0;
+    	try{
+    		db.execSQL("INSERT INTO "+DATABASE_TABLE+" (nickname, fullname, date_created) VALUES ('"+ nickname +"','"+ fullname +"', datetime()) ");
+        }catch(Exception e){
+        	e.printStackTrace();
+        }finally{
+        	this.close();
+        } 
+        return retorno;
+    }
+    
+    public Cursor getNickname() 
+    {
+        return db.query(DATABASE_TABLE, new String[] {
+        		KEY_ROWID, 
+        		KEY_NICKNAME,
+        		KEY_FULLNAME,
+        		KEY_USER_ID}, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null);
+    }
+    
+    public int getUserId(){
+    	try{
+    		this.open();
+	    	Cursor cursor = db.rawQuery("SELECT * FROM register", null);
+	    	cursor.moveToFirst();
+	    	int user_id = cursor.getInt(cursor.getColumnIndex("_id"));
+	    	cursor.close();
+	    	return user_id;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}finally{
+    		this.close();
+    	}
+    	return 0;
+    }
+    
+	public long registerScore(String nm_arena, int quantity, Calendar date){
+    	long retorno = 0;
+    	try{
+    		int id_arena = getArenaId(nm_arena);
+    		int user_id = getUserId();
+    		this.open();
+    		db.execSQL("INSERT INTO "+DATABASE_TABLE3+" (arena_id, score_quantity, score_date, user_id) VALUES ("+ id_arena +"," + quantity + ", '" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH) + 1)  + "/" + date.get(Calendar.YEAR) + "', " + user_id +") ");
+        }catch(Exception e){
+        	e.printStackTrace();
+        }finally{
+        	this.close();
+        } 
+        return retorno;
     }
     
     public Cursor getAllScores() 
@@ -201,6 +257,62 @@ public class DBAdapter
                 null, 
                 null, 
                 null);
+    }
+    
+    public int getTotalScore(int qtd){
+    	int total = 0;
+    	try{
+    		this.open();
+    		if(qtd == 0){
+    			String query = "SELECT SUM(score_quantity) FROM score";
+	    		Cursor cursor = db.rawQuery(query, null);
+    			if(cursor.moveToFirst()) {
+    			    total = cursor.getInt(0);
+    			}
+		    	cursor.close();
+    		}else if(qtd == 7){
+    			Calendar dateAux = Calendar.getInstance();
+    			dateAux.add(Calendar.DATE, -7);
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
+    			System.out.println(query);
+    			Cursor cursor = db.rawQuery(query, null);
+    			cursor.moveToFirst();
+        		while (cursor.isAfterLast() == false){ 
+    			    total = cursor.getInt(0);
+            		cursor.moveToNext();
+            	}
+    	    	cursor.close();
+        	}else if(qtd == 15){
+    			Calendar dateAux = Calendar.getInstance();
+    			dateAux.add(Calendar.DATE, -15);
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
+    			System.out.println(query);
+    			Cursor cursor = db.rawQuery(query, null);
+    			cursor.moveToFirst();
+        		while (cursor.isAfterLast() == false){ 
+    			    total = cursor.getInt(0);
+            		cursor.moveToNext();
+            	}
+    	    	cursor.close();
+        	}else if(qtd == 30){
+    			Calendar dateAux = Calendar.getInstance();
+    			dateAux.add(Calendar.DATE, -30);
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= date('now','-30 days')";
+    			System.out.println(query);
+    			Cursor cursor = db.rawQuery(query, null);
+    			cursor.moveToFirst();
+        		while (cursor.isAfterLast() == false){ 
+    			    total = cursor.getInt(0);
+            		cursor.moveToNext();
+            	}
+    	    	cursor.close();
+        	}
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}finally{
+    		this.close();
+    	}
+    	return total;
     }
        
     //---updates a title---
