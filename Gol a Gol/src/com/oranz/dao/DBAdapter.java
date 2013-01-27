@@ -274,37 +274,40 @@ public class DBAdapter
     			Calendar dateAux = Calendar.getInstance();
     			dateAux.add(Calendar.DATE, -7);
     			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
-    			System.out.println(query);
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
+        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 15){
     			Calendar dateAux = Calendar.getInstance();
     			dateAux.add(Calendar.DATE, -15);
-    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
-    			System.out.println(query);
+    			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
+        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 30){
     			Calendar dateAux = Calendar.getInstance();
     			dateAux.add(Calendar.DATE, -30);
-    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= date('now','-30 days')";
-    			System.out.println(query);
+    			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= date('now','-30 days')";
+    			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
+        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}
     	}catch(Exception e){

@@ -3,27 +3,13 @@ package com.oranz.golagol;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
-
-@SuppressWarnings("deprecation")
 public class ConfirmScore extends Activity {
 	
 	private TextView tvArenaConfirm;
@@ -33,13 +19,13 @@ public class ConfirmScore extends Activity {
 	private Button btOk;
 	
 	// FS - Facebook Stuff
-	private static final String APP_ID = "318684344914920";
-	private static final String[] PERMISSIONS = new String[] {"publish_stream"};
-	private static final String TOKEN = "access_token";
-    private static final String EXPIRES = "expires_in";
-    private static final String KEY = "facebook-credentials";
-	private Facebook facebook;
-	private String messageToPost;
+//	private static final String APP_ID = "318684344914920";
+//	private static final String[] PERMISSIONS = new String[] {"publish_stream"};
+//	private static final String TOKEN = "access_token";
+//    private static final String EXPIRES = "expires_in";
+//    private static final String KEY = "facebook-credentials";
+//	private Facebook facebook;
+//	private String messageToPost;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,16 +62,15 @@ public class ConfirmScore extends Activity {
         	}
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_confirm_score, menu);
-        return true;
-    }
     
 	public void postOnFacebook(View view){
         switch (view.getId()) {
         case R.id.ivFacebookLogo:
+        	Toast.makeText(this, "Breve", Toast.LENGTH_LONG).show();
+        }
+	}
+        /*
+        	
         	// FS - Facebook Stuff
     		facebook = new Facebook(APP_ID);
     		restoreCredentials(facebook);
@@ -101,6 +86,7 @@ public class ConfirmScore extends Activity {
 	    	//Toast.makeText(getApplicationContext(), "Publicado com sucesso.", Toast.LENGTH_LONG).show();	    	
         }
     }
+    */
     
     public void openConfig(View view){
         switch (view.getId()) {
@@ -110,16 +96,7 @@ public class ConfirmScore extends Activity {
         }
     }
     
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    
+    /*
     // FS - More Facebook Stuff
 	public boolean saveCredentials(Facebook facebook) {
     	Editor editor = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE).edit();
@@ -135,7 +112,7 @@ public class ConfirmScore extends Activity {
     	return facebook.isSessionValid();
 	}
 	
-	protected void postOnFacebook(Bundle savedInstanceState) {
+	protected void facebookIntegration(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		facebook = new Facebook(APP_ID);
@@ -216,5 +193,5 @@ public class ConfirmScore extends Activity {
 	private void showToast(String message){
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
-
+     */
 }

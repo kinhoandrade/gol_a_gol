@@ -3,12 +3,11 @@ package com.oranz.golagol;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ScoreReport extends Activity {
 	private Button btClose;
@@ -59,13 +58,10 @@ public class ScoreReport extends Activity {
         }
     }
     
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+	public void postOnFacebook(View view){
+        switch (view.getId()) {
+        case R.id.ivFacebookLogo:
+        	Toast.makeText(this, "Breve", Toast.LENGTH_LONG).show();
         }
-        return super.onOptionsItemSelected(item);
-    }
+	}
 }

@@ -161,7 +161,6 @@ public class SaveScore extends Activity {
         cursor.close();
     }
     
-    @SuppressWarnings("deprecation")
 	public void createNickname(){
         AlertDialog.Builder editalert = new AlertDialog.Builder(this);
 
@@ -170,7 +169,8 @@ public class SaveScore extends Activity {
 
         etNickname = new EditText(this);
         etFullname = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
+        @SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
         etNickname.setLayoutParams(lp);
         etNickname.setHeight(100);
         editalert.setView(etNickname);
