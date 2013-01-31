@@ -36,8 +36,8 @@ public class ScoreReport extends Activity {
         int last15days = SaveScore.getTotal(15);
         tvLast15days.setText("" + last15days);
         
-        int last30days = SaveScore.getTotal(30);
-        tvLast30days.setText("" + last30days);
+        //int last30days = SaveScore.getTotal(30);
+        //tvLast30days.setText("" + last30days);
         
         SaveScore.printAllScores();
         

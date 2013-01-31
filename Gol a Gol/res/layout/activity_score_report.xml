@@ -106,7 +106,7 @@
 		        android:layout_below="@id/tvLast15DaysResult"
 		        android:layout_alignLeft="@id/tvLast15DaysResult"
 		        android:layout_marginTop="5dp"
-		        android:text="@string/last_30_days" />
+		        android:text=" " />
    	   	    
    	   	    <TextView
 		        android:id="@+id/tvLast30DaysResult"
@@ -114,7 +114,7 @@
 		        android:layout_below="@id/tvLast30Days"
 		        android:layout_alignLeft="@id/tvLast30Days"
 		        android:layout_marginTop="5dp"
-		        android:text="@string/last_30_days" />
+		        android:text=" " />
 	   	    	         
 	         <ImageView
 			    android:id="@+id/ivFacebookLogo"

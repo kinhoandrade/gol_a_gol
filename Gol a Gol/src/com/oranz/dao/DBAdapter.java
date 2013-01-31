@@ -1,6 +1,7 @@
 package com.oranz.dao;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -41,7 +42,7 @@ public class DBAdapter
         "create table if not exists register(_id integer primary key autoincrement, "
         + "nickname text not null," 
         + "fullname text," 
-        + "date_created date not null,"
+        + "date_created int not null,"
         + "user_id integer);";
     
     private static final String DATABASE_CREATE2 =
@@ -52,14 +53,14 @@ public class DBAdapter
             "create table if not exists score(_id integer primary key autoincrement, "
             + "arena_id integer not null," 
             + "score_quantity integer not null,"
-            + "score_date datetime not null,"
+            + "score_date int not null,"
             + "user_id integer);";
 
     private static final String DATABASE_CREATE4 =
             "create table if not exists friends(_id integer primary key autoincrement, "
             + "friend_id integer not null,"
             + "friend_score_quantity integer not null,"
-            + "date_created date not null);";
+            + "date_created int not null);";
 
     private final Context context;  
     
@@ -190,7 +191,9 @@ public class DBAdapter
 	public long insertNickname(String nickname, String fullname){
     	long retorno = 0;
     	try{
-    		db.execSQL("INSERT INTO "+DATABASE_TABLE+" (nickname, fullname, date_created) VALUES ('"+ nickname +"','"+ fullname +"', datetime()) ");
+    		Date date_created = new Date();
+    		long timeMilliseconds = date_created.getTime();
+    		db.execSQL("INSERT INTO "+DATABASE_TABLE+" (nickname, fullname, date_created) VALUES ('"+ nickname +"','"+ fullname +"'," + timeMilliseconds + ") ");
         }catch(Exception e){
         	e.printStackTrace();
         }finally{
@@ -234,8 +237,10 @@ public class DBAdapter
     	try{
     		int id_arena = getArenaId(nm_arena);
     		int user_id = getUserId();
+    		Date date_created = date.getTime();
+    		long timeMilliseconds = date_created.getTime();
     		this.open();
-    		db.execSQL("INSERT INTO "+DATABASE_TABLE3+" (arena_id, score_quantity, score_date, user_id) VALUES ("+ id_arena +"," + quantity + ", '" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH) + 1)  + "/" + date.get(Calendar.YEAR) + "', " + user_id +") ");
+    		db.execSQL("INSERT INTO "+DATABASE_TABLE3+" (arena_id, score_quantity, score_date, user_id) VALUES ("+ id_arena +"," + quantity + ", " + timeMilliseconds+ ", " + user_id +") ");
         }catch(Exception e){
         	e.printStackTrace();
         }finally{
@@ -271,9 +276,10 @@ public class DBAdapter
     			}
 		    	cursor.close();
     		}else if(qtd == 7){
-    			Calendar dateAux = Calendar.getInstance();
-    			dateAux.add(Calendar.DATE, -7);
-    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
+        		Date date_created = new Date();
+        		long timeMilliseconds = date_created.getTime();
+        		timeMilliseconds = timeMilliseconds - (7 * (24 * (3600 * 1000))); // 7 dias
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= " + timeMilliseconds;
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 
@@ -283,10 +289,10 @@ public class DBAdapter
         		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 15){
-    			Calendar dateAux = Calendar.getInstance();
-    			dateAux.add(Calendar.DATE, -15);
-    			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
-    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
+        		Date date_created = new Date();
+        		long timeMilliseconds = date_created.getTime();
+        		timeMilliseconds = timeMilliseconds - (15 * (24 * (3600 * 1000))); // 15 dias
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= " + timeMilliseconds;
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 
@@ -296,11 +302,15 @@ public class DBAdapter
         		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 30){
-    			Calendar dateAux = Calendar.getInstance();
-    			dateAux.add(Calendar.DATE, -30);
+    			//Calendar dateAux = Calendar.getInstance();
+    			//dateAux.add(Calendar.DATE, -30);
     			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= date('now','-30 days')";
     			//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "-" + (dateAux.get(Calendar.MONTH)+1) + "-" + dateAux.get(Calendar.YEAR) + "'";
-    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
+        		//String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= '" + dateAux.get(Calendar.DAY_OF_MONTH) + "/" + (dateAux.get(Calendar.MONTH)+1) + "/" + dateAux.get(Calendar.YEAR) + "'";
+        		Date date_created = new Date();
+        		long timeMilliseconds = date_created.getTime();
+        		timeMilliseconds = timeMilliseconds - (30 * (24 * (3600 * 1000))); // 30 dias
+    			String query = "SELECT SUM(score_quantity) FROM score WHERE score_date >= " + timeMilliseconds;
     			Cursor cursor = db.rawQuery(query, null);
     			cursor.moveToFirst();
         		while (cursor.isAfterLast() == false){ 

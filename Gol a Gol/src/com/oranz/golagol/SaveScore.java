@@ -56,7 +56,7 @@ public class SaveScore extends Activity {
         
         boolean drop = false;
         
-        if (drop == true){        
+        if (drop == true){
 	       	 AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 	       	 myAlertDialog.setTitle("Apagar dados");
 	       	 myAlertDialog.setMessage("Todos os dados podem ser apagados?");
