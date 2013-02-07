@@ -25,7 +25,7 @@
 
     <color name="grey">#BBB</color>
 
-    <string name="close">Close</string>
+    <string name="close">Fechar</string>
     <string name="title_activity_config">Gol a Gol - Configurações</string>
     <string name="configurations">Configurações</string>
     <string name="newArena">Nova Arena</string>
@@ -43,5 +43,8 @@
     <string name="app_id">318684344914920</string>
     <string name="nickname">Apelido</string>
     <string name="fullname">Nome Completo</string>
+    <string name="title_activity_list_scores">Gol a Gol - Lista de Gols</string>
+    <string name="test">Teste</string>
+    <string name="list_scores">Listar Gols</string>
 
 </resources>

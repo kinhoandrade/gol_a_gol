@@ -1,13 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oranz.golagol"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="5"
         android:targetSdkVersion="15" />
-    <permission android:name="android.permission.INTERNET">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+
+    <permission android:name="android.permission.INTERNET" >
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
     </permission>
 
     <application
@@ -44,7 +47,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
-        <activity android:name="com.facebook.LoginActivity"></activity>
+        <activity android:name="com.facebook.LoginActivity" >
+        </activity>
+        <activity
+            android:name=".ListScores"
+            android:label="@string/title_activity_list_scores" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oranz.golagol.SaveScore" />
+        </activity>
     </application>
 
 </manifest>

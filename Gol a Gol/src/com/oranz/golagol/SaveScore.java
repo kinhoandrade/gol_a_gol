@@ -2,11 +2,13 @@ package com.oranz.golagol;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,22 +26,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.oranz.dao.DBAdapter;
+import com.oranz.golagol.entidades.Score;
 
 @SuppressWarnings("unused")
 public class SaveScore extends Activity {
 
 	private static DBAdapter db;
 	
-	private Spinner spArena;
+	private static Spinner spArena;
 	private EditText etQuantidade;
 	private EditText etNickname;
 	private EditText etFullname;
 	private DatePicker dpDataScore;
 	private Button btRegisterScore;
-	
-	private List<String> arenasList;
-	
-    private String array_spinner[];
+		
+    private static String array_spinner[];
     
 	private static String arena;
 	private static int quantity;
@@ -47,6 +48,8 @@ public class SaveScore extends Activity {
 	private static List<String> listArenas;
 	private static String nickname;
 	private static String fullname;
+	
+	private static Context appContext;
 	
     @SuppressLint("NewApi")
 	@Override
@@ -79,7 +82,7 @@ public class SaveScore extends Activity {
         	db = new DBAdapter(getApplicationContext());    
         	db.close();
         }catch(Exception e){
-        	Toast.makeText(this, "Ocorreu um erro no sistema.", Toast.LENGTH_LONG).show();       	
+        	Toast.makeText(this, "Ocorreu um erro no sistema.", Toast.LENGTH_LONG).show();
         }
         
         spArena = (Spinner) findViewById(R.id.spArena);
@@ -87,33 +90,10 @@ public class SaveScore extends Activity {
         dpDataScore = (DatePicker) findViewById(R.id.dpScoreDate);
         btRegisterScore = (Button) findViewById(R.id.btRegisterScore);
         
+        appContext = getApplicationContext();
         
         try{
-	        db.open();
-	        Cursor cursorArenas = db.getAllArenas();
-	        
-	        listArenas = new ArrayList<String>();
-	        cursorArenas.moveToFirst();
-	    	while (cursorArenas.isAfterLast() == false){
-	    		String arena = cursorArenas.getString(cursorArenas.getColumnIndex("nm_arena"));
-	    		if(!listArenas.contains(arena))
-	    			listArenas.add(arena);
-	    		cursorArenas.moveToNext();
-	    	}
-	    	
-	    	db.close();
-	    	cursorArenas.close();
-	        
-	        
-	        array_spinner=new String[listArenas.size()+1];
-	        array_spinner[0]="PADRÃO";
-	        for(int i = 0; i < listArenas.size(); i++){
-	        	array_spinner[i+1] = listArenas.get(i);
-	        }
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array_spinner);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	        spArena.setAdapter(adapter);
-	        spArena.setSelection(0);   
+	        spArena = getArenasSpinner(spArena);   
         }catch(Exception e){
     		e.printStackTrace();
         }
@@ -139,13 +119,54 @@ public class SaveScore extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.0\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v1.1\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
   	    	startActivity(nextScreen);
         	  
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    public static Spinner getSpArena(){
+    	return spArena;
+    }
+    
+    public static void refreshArenaSpinner(Spinner auxSpinner) throws Exception{
+    	spArena = getArenasSpinner(auxSpinner);
+    }
+    
+    public static Spinner getArenasSpinner(Spinner auxSpinner) throws Exception{
+    	try {
+	    	db.open();
+		    Cursor cursorArenas = db.getAllArenas();
+		    
+		    listArenas = new ArrayList<String>();
+		    cursorArenas.moveToFirst();
+			while (cursorArenas.isAfterLast() == false){
+				String arena = cursorArenas.getString(cursorArenas.getColumnIndex("nm_arena"));
+				if(!listArenas.contains(arena))
+					listArenas.add(arena);
+				cursorArenas.moveToNext();
+			}
+			
+			db.close();
+			cursorArenas.close();		    
+		    
+		    array_spinner=new String[listArenas.size()+1];
+		    array_spinner[0]="PADRÃO";
+		    for(int i = 0; i < listArenas.size(); i++){
+		    	array_spinner[i+1] = listArenas.get(i);
+		    }
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, array_spinner);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		    auxSpinner.setAdapter(adapter);
+		    auxSpinner.setSelection(array_spinner.length - 1);
+    	}catch(Exception e){
+    		Toast.makeText(appContext, "Ocorreu um erro ao carregar as arenas", Toast.LENGTH_LONG).show();
+    	}
+    	
+    	return auxSpinner;
     }
     
     public void refreshNickname(){
@@ -285,7 +306,7 @@ public class SaveScore extends Activity {
         Cursor cursor = db.getAllScores();
         cursor.moveToFirst();
     	while (cursor.isAfterLast() == false){ 
-    		System.out.println(cursor.getString(cursor.getColumnIndex("score_quantity")) + " >> " + cursor.getString(cursor.getColumnIndex("score_date")));
+    		System.out.println(cursor.getString(cursor.getColumnIndex("arena_id")) + " >> "+ cursor.getString(cursor.getColumnIndex("score_quantity")) + " >> " + cursor.getString(cursor.getColumnIndex("score_date")));
     		cursor.moveToNext();
     	}
         db.close();
@@ -298,10 +319,72 @@ public class SaveScore extends Activity {
         db.close();
     }
     
+    public static List<Score> getAllScores(){
+    	List<Score> listScores = new ArrayList<Score>();
+    	
+    	db.open();
+        Cursor cursor = db.getScoresByArena("");
+        cursor.moveToFirst();
+    	while (cursor.isAfterLast() == false){
+    		Score scoreAux = new Score();
+    		scoreAux.setArena(cursor.getString(cursor.getColumnIndex("nm_arena")));
+    		scoreAux.setQuantity(cursor.getInt(cursor.getColumnIndex("score_quantity")));
+    		long longAux= cursor.getLong(cursor.getColumnIndex("score_date"));
+    		Date myDateNew = new Date(longAux);
+    		scoreAux.setDate(myDateNew);
+    		listScores.add(scoreAux);
+    		cursor.moveToNext();
+    	}
+        db.close();
+        cursor.close();
+    	
+    	return listScores;
+    }
+    
+    public static List<String> getAllArenas(){
+    	List<String> listArenas = new ArrayList<String>();
+    	
+    	db.open();
+        Cursor cursor = db.getAllArenas();
+        cursor.moveToFirst();
+    	while (cursor.isAfterLast() == false){
+    		String arena = cursor.getString(cursor.getColumnIndex("nm_arena"));
+    		cursor.moveToNext();
+    	}
+        db.close();
+        cursor.close();
+    	
+    	return listArenas;
+    }
+    
     public static void createArena(String arena){
     	db.open();
-        db.insertArena(arena);
+    	if(!listArenas.contains(arena))
+    		db.insertArena(arena);
         db.close();
+    }
+    
+    public static boolean removeArena(String nm_arena){
+    	printAllScores();
+    	db.open();
+    	boolean hasScore = false;
+    	Cursor cursor = db.getScoresByArena(nm_arena);
+        cursor.moveToFirst();
+    	while (cursor.isAfterLast() == false){ 
+    		hasScore = true;
+    		String arenaTemp = cursor.getString(cursor.getColumnIndex("nm_arena"));
+    		cursor.moveToNext();
+    	}
+        cursor.close();
+        
+    	if(hasScore == false){
+        	db.deleteArena(nm_arena);
+        	db.close();
+        	return true;
+    	}
+    	    	
+        db.close();
+        return false;
     }
     
     public void openConfig(View view){

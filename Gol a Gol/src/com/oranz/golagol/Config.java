@@ -6,11 +6,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Config extends Activity {
 	private Button btClose;
 	private EditText etCreateArena;
+	private Spinner spArenasConfig;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,8 +21,21 @@ public class Config extends Activity {
         
         btClose = (Button) findViewById(R.id.btCloseConfig);
         etCreateArena = (EditText) findViewById(R.id.etArenaConfig);
+        spArenasConfig = (Spinner) findViewById(R.id.spArenasConfig);
         
-        btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
+        try{
+        	spArenasConfig = SaveScore.getArenasSpinner(spArenasConfig);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        
+        btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {
+	        	try {
+				SaveScore.refreshArenaSpinner(SaveScore.getSpArena());
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finish();
+		}});
     }
 
     @Override
@@ -31,15 +46,39 @@ public class Config extends Activity {
     
     public void removeArena(View view){
         switch (view.getId()) {
-        case R.id.btRemoveArena:	        
-        	Toast.makeText(this, "Arena excluída", Toast.LENGTH_LONG).show();
+        case R.id.btRemoveArena:
+        	String arena = spArenasConfig.getSelectedItem().toString();
+        	
+        	if(arena.equals("PADRÃO")){	        
+            	Toast.makeText(this, "A arena Padrão não apaga.", Toast.LENGTH_LONG).show();
+            	return;        		
+        	}        	
+        	
+        	boolean result = SaveScore.removeArena(arena);
+        	if (result == true){
+        		Toast.makeText(this, "Arena excluída", Toast.LENGTH_LONG).show();
+        	}else {
+        		Toast.makeText(this, "Arena com gols não pode ser excluída.", Toast.LENGTH_LONG).show();
+        	}
+
+            try{
+            	spArenasConfig = SaveScore.getArenasSpinner(spArenasConfig);
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
         }
     }
     
     public void createArena(View view){
         switch (view.getId()) {
         case R.id.btCreateArena:
+        	
         	String arena = etCreateArena.getText().toString();
+        	
+        	if(arena.trim().equals("")){	        
+            	Toast.makeText(this, "Falta informar a arena!", Toast.LENGTH_LONG).show();
+            	return;
+        	}
         	
         	SaveScore.createArena(arena);
      	           	

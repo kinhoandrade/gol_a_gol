@@ -14,7 +14,6 @@ public class ScoreReport extends Activity {
 	private TextView tvTotal;
 	private TextView tvLast7days;
 	private TextView tvLast15days;
-	private TextView tvLast30days;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,6 @@ public class ScoreReport extends Activity {
         tvTotal = (TextView) findViewById(R.id.tvTotalResult);
         tvLast7days = (TextView) findViewById(R.id.tvLast7DaysResult);
         tvLast15days = (TextView) findViewById(R.id.tvLast15DaysResult);
-        tvLast30days = (TextView) findViewById(R.id.tvLast30DaysResult);
         
         int total = SaveScore.getTotal(0);
         tvTotal.setText("" + total);
@@ -35,9 +33,6 @@ public class ScoreReport extends Activity {
         
         int last15days = SaveScore.getTotal(15);
         tvLast15days.setText("" + last15days);
-        
-        //int last30days = SaveScore.getTotal(30);
-        //tvLast30days.setText("" + last30days);
         
         SaveScore.printAllScores();
         
@@ -62,6 +57,14 @@ public class ScoreReport extends Activity {
         switch (view.getId()) {
         case R.id.ivFacebookLogo:
         	Toast.makeText(this, "Breve", Toast.LENGTH_LONG).show();
+        }
+	}
+	
+	public void listScores(View view){
+        switch (view.getId()) {
+        case R.id.btListScores:	    	
+	    	Intent nextScreen = new Intent(getApplicationContext(), ListScores.class);	    	
+	    	startActivity(nextScreen);
         }
 	}
 }

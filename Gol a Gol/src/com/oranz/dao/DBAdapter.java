@@ -61,7 +61,7 @@ public class DBAdapter
             + "friend_id integer not null,"
             + "friend_score_quantity integer not null,"
             + "date_created int not null);";
-
+    
     private final Context context;  
     
     private DatabaseHelper DBHelper;
@@ -326,6 +326,20 @@ public class DBAdapter
     		this.close();
     	}
     	return total;
+    }
+    
+    public Cursor getScoresByArena(String nm_arena){
+    	Cursor cursor = null;
+    	try{
+    		String query = "SELECT case when arn.nm_arena is null then 'NÃO IDENTIFICADA' else arn.nm_arena end nm_arena, scr.score_quantity, scr.score_date FROM score scr LEFT OUTER JOIN arena arn ON arn._id = scr.arena_id";
+    		if (!(nm_arena == null || nm_arena.trim().equals(""))){
+    			query = "SELECT arn.nm_arena, scr.score_quantity, scr.score_date FROM score scr INNER JOIN arena arn ON arn._id = scr.arena_id where arn.nm_arena = '" + nm_arena + "'";
+    		}
+	    	cursor = db.rawQuery(query, null);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return cursor;
     }
        
     //---updates a title---
