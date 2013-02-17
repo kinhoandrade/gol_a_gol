@@ -50,6 +50,7 @@ public class SaveScore extends Activity {
 	private static String fullname;
 	
 	private static Context appContext;
+	private static String fbId = "318684344914920"; 
 	
     @SuppressLint("NewApi")
 	@Override
@@ -87,7 +88,6 @@ public class SaveScore extends Activity {
         
         spArena = (Spinner) findViewById(R.id.spArena);
         etQuantidade = (EditText) findViewById(R.id.etQuantity);
-        dpDataScore = (DatePicker) findViewById(R.id.dpScoreDate);
         btRegisterScore = (Button) findViewById(R.id.btRegisterScore);
         
         appContext = getApplicationContext();
@@ -115,15 +115,23 @@ public class SaveScore extends Activity {
         return result;
     }
     
+    public void openMenu(View view){
+        switch (view.getId()) {
+        case R.id.ivMenu:
+        	openOptionsMenu();
+        }
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.1\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v1.2\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
   	    	startActivity(nextScreen);
-        	  
+  	        return super.onOptionsItemSelected(item);        	  
         }
         return super.onOptionsItemSelected(item);
     }
@@ -154,7 +162,7 @@ public class SaveScore extends Activity {
 			cursorArenas.close();		    
 		    
 		    array_spinner=new String[listArenas.size()+1];
-		    array_spinner[0]="PADRÃO";
+		    array_spinner[0]="NÃO IDENTIFICADA";
 		    for(int i = 0; i < listArenas.size(); i++){
 		    	array_spinner[i+1] = listArenas.get(i);
 		    }
@@ -271,6 +279,8 @@ public class SaveScore extends Activity {
 	            Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
 	            return;
 	        }
+
+	        dpDataScore = (DatePicker) findViewById(R.id.dpScoreDate);
 	    	
 	    	Intent nextScreen = new Intent(getApplicationContext(), ConfirmScore.class);
 	    	
@@ -278,6 +288,34 @@ public class SaveScore extends Activity {
 	    	quantity = Integer.parseInt(etQuantidade.getText().toString());
 	    	date = Calendar.getInstance();
 	    	date.set(dpDataScore.getYear(), dpDataScore.getMonth(), dpDataScore.getDayOfMonth());
+	    	
+	    	startActivity(nextScreen);
+        }
+    }
+    
+    public void registerScoreSmall(View view){
+        switch (view.getId()) {
+        case R.id.btRegisterScoreSmall:
+        	refreshNickname();
+        	if (nickname == null || nickname.equalsIgnoreCase("")){
+        		createNickname2();
+        		return;
+        	}
+        	
+	        if (etQuantidade.getText().length() == 0 || Float.parseFloat(etQuantidade.getText().toString()) <= 0) {
+	        	String mensagem = "";
+	        	//mensagem = findViewById(R.string.msgQuantityNull).toString();
+	        	mensagem = "Só faltou falar quantos gols!";
+	            Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+	            return;
+	        }
+	        
+	    	
+	    	Intent nextScreen = new Intent(getApplicationContext(), ConfirmScore.class);
+	    	
+	    	arena = spArena.getSelectedItem().toString();
+	    	quantity = Integer.parseInt(etQuantidade.getText().toString());
+	    	date = Calendar.getInstance();
 	    	
 	    	startActivity(nextScreen);
         }

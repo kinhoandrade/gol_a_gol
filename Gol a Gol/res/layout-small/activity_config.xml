@@ -1,0 +1,135 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+	    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <LinearLayout 
+	        android:id="@+id/llHeader"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/white">
+			<ImageView
+			    android:id="@+id/ivBanner"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:src="@drawable/scoreboard_small" />
+		</LinearLayout>
+
+	    <RelativeLayout
+	        android:id="@+id/rlBody"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_below="@id/llHeader"
+	        android:background="@color/green">
+			
+	        <TextView
+	            android:id="@+id/tvConfig" 
+		        style="@style/defaultFontSmall"
+			    android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp"        
+		        android:text="@string/configurations"/>
+
+   	        <TextView
+	            android:id="@+id/tvArenaConfig" 
+		        style="@style/defaultFontSmall"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="10dp"        
+		        android:layout_below="@id/tvConfig"
+		        android:text="@string/newArena"/>
+   	        	        
+   	        <EditText
+   	            android:id="@+id/etArenaConfig"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/tvArenaConfig"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:ems="10"
+		        android:inputType="textPersonName" />
+   	        
+   	        <Button
+   	            android:id="@+id/btCreateArena"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/etArenaConfig"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:onClick="createArena"
+		        android:text="@string/create" />
+
+	        <TextView
+	            android:id="@+id/tvRemoveArena" 
+		        style="@style/defaultFontSmall"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="10dp"        
+		        android:layout_below="@id/btCreateArena"
+		        android:text="@string/removeArena"/>
+   	        	        
+   	        <RelativeLayout 
+		        android:id="@+id/rlRemoveArena"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_below="@id/tvRemoveArena">
+		        
+	   	        <Spinner
+			        android:id="@+id/spArenasConfig"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentLeft="true"
+			        android:layout_marginTop="5dp" />
+			
+			    <Button
+			        android:id="@+id/btRemoveArena"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_alignLeft="@id/spArenasConfig"
+			        android:layout_below="@id/spArenasConfig"
+			        android:layout_alignParentRight="true"
+			        android:onClick="removeArena"
+			        android:text="@string/remove" />
+   	        </RelativeLayout>
+		        
+			<Button
+	            android:id="@+id/btCloseConfig"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/rlRemoveArena"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginBottom="10dp"
+		        android:layout_marginTop="15dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:onClick="close"
+		        android:text="@string/close" />
+		        
+	    </RelativeLayout>
+	    
+	    <LinearLayout 
+	        android:id="@+id/llFooter"
+	        android:layout_width="fill_parent"
+	        android:layout_height="10dp"
+	        android:layout_below="@id/rlBody"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:background="@color/green">
+		</LinearLayout>		
+	        
+	</RelativeLayout>
+</ScrollView>

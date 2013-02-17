@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oranz.golagol"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="5"
@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".SaveScore"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_save_score" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,7 @@
         </activity>
         <activity
             android:name=".ConfirmScore"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_confirm_score" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -35,6 +37,7 @@
         </activity>
         <activity
             android:name=".Config"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_config" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,6 +45,7 @@
         </activity>
         <activity
             android:name=".ScoreReport"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_score_report" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -51,11 +55,14 @@
         </activity>
         <activity
             android:name=".ListScores"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_list_scores" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
+
+        <meta-data android:value="@string/app_id" android:name="com.facebook.sdk.ApplicationId"/>
     </application>
 
 </manifest>

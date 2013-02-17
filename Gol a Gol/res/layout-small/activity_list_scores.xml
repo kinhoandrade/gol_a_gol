@@ -1,0 +1,103 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+	    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <RelativeLayout 
+	        android:id="@+id/llHeader"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/white">
+			<ImageView
+			    android:id="@+id/ivBanner"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:contentDescription="@string/banner"
+			    android:layout_centerHorizontal="true"
+			    android:layout_marginTop="10dp"
+			    android:src="@drawable/scoreboard_small" />
+			<ImageView 
+			    android:id="@+id/ivConfig"
+		        style="@style/settingIconSmall"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:layout_marginRight="10dp"
+			    android:layout_alignParentRight="true"
+			    android:onClick="openConfig"
+			    android:src="@drawable/setting_icon" />
+		</RelativeLayout>
+		
+	    <RelativeLayout
+	        android:id="@+id/rlBody"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_below="@id/llHeader"
+	        android:background="@color/green">
+	        
+	        <TextView
+	            android:id="@+id/tvReport" 
+		        style="@style/defaultFontSmall"
+			    android:layout_centerHorizontal="true"
+		        android:layout_marginLeft="20dp"
+		        android:layout_marginTop="5dp"        
+		        android:text="@string/reports"/>
+		    		
+		  	<ListView android:id="@+id/android:list"
+		        android:layout_width="match_parent"
+		        android:layout_height="150dp"
+		        android:layout_below="@id/tvReport"
+		        android:background="@color/white"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="15dp"
+		        android:layout_marginTop="5dp" />
+		
+		  	<TextView android:id="@+id/android:empty"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:layout_below="@id/tvReport"
+		        android:text="@string/test"/>
+
+  		    <TextView
+		        android:id="@+id/tvTotalList"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/android:list"
+				android:layout_marginLeft="10dp"
+		        android:text="@string/total"
+		        android:textColor="@color/white"
+		        android:visibility="invisible" />
+  		    
+   	         <Button
+	            android:id="@+id/btCloseList"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/tvTotalList"
+		        android:layout_alignParentBottom="true"
+		        android:layout_marginBottom="16dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:text="@string/close" />
+		        
+	    </RelativeLayout>
+	    
+	    <LinearLayout 
+	        android:id="@+id/llFooter"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_below="@id/rlBody"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:background="@color/green">
+		</LinearLayout>		
+	        
+	</RelativeLayout>
+</ScrollView>

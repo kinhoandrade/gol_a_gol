@@ -27,7 +27,7 @@
 
     <string name="close">Fechar</string>
     <string name="title_activity_config">Gol a Gol - Configurações</string>
-    <string name="configurations">Configurações</string>
+    <string name="configurations">[Configurações]</string>
     <string name="newArena">Nova Arena</string>
     <string name="remove">Excluir</string>
     <string name="removeArena">Excluir Arena</string>
@@ -46,5 +46,7 @@
     <string name="title_activity_list_scores">Gol a Gol - Lista de Gols</string>
     <string name="test">Teste</string>
     <string name="list_scores">Listar Gols</string>
+    <string name="title_activity_test_connect">TestConnect</string>
+    <string name="app_id">318684344914920</string>
 
 </resources>

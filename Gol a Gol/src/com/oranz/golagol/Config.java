@@ -49,8 +49,8 @@ public class Config extends Activity {
         case R.id.btRemoveArena:
         	String arena = spArenasConfig.getSelectedItem().toString();
         	
-        	if(arena.equals("PADRÃO")){	        
-            	Toast.makeText(this, "A arena Padrão não apaga.", Toast.LENGTH_LONG).show();
+        	if(arena.equals("NÃO IDENTIFICADA")){	        
+            	Toast.makeText(this, "Esta arena não pode ser apagada.", Toast.LENGTH_LONG).show();
             	return;        		
         	}        	
         	
@@ -58,7 +58,7 @@ public class Config extends Activity {
         	if (result == true){
         		Toast.makeText(this, "Arena excluída", Toast.LENGTH_LONG).show();
         	}else {
-        		Toast.makeText(this, "Arena com gols não pode ser excluída.", Toast.LENGTH_LONG).show();
+        		Toast.makeText(this, "Arena com gol não pode ser removida.", Toast.LENGTH_LONG).show();
         	}
 
             try{

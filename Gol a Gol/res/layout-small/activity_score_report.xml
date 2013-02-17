@@ -1,0 +1,137 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+	    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <RelativeLayout 
+	        android:id="@+id/llHeader"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/white">
+			<ImageView
+			    android:id="@+id/ivBanner"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:contentDescription="@string/banner"
+			    android:layout_centerHorizontal="true"
+			    android:layout_marginTop="10dp"
+			    android:src="@drawable/scoreboard_small" />
+			<ImageView 
+			    android:id="@+id/ivConfig"
+		        style="@style/settingIconSmall"
+			    android:contentDescription="@string/banner"
+			    android:layout_marginTop="10dp"
+			    android:layout_marginRight="10dp"
+			    android:layout_alignParentRight="true"
+			    android:onClick="openConfig"
+			    android:src="@drawable/setting_icon" />
+		</RelativeLayout>
+		
+	    <RelativeLayout
+	        android:id="@+id/rlBody"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_below="@id/llHeader"
+	        android:background="@color/green">
+			
+	        <TextView
+	            android:id="@+id/tvReport" 
+		        style="@style/defaultFontSmall"
+			    android:layout_centerHorizontal="true"
+		        android:layout_marginLeft="20dp"
+		        android:layout_marginTop="5dp"        
+		        android:text="@string/reports"/>
+	        
+		    <TextView
+		        android:id="@+id/tvTotal"
+		        style="@style/reportsTitleSmall"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
+		        android:layout_below="@id/tvReport"
+		        android:text="@string/total" />
+
+   		    <TextView
+		        android:id="@+id/tvTotalResult"
+		        style="@style/reportsResultSmall"
+		        android:layout_marginTop="5dp"
+		        android:layout_below="@id/tvTotal"
+		        android:layout_alignLeft="@id/tvTotal"
+		        android:text="@string/total" />
+		    		
+	   	    <TextView
+		        android:id="@+id/tvLast7Days"
+		        style="@style/reportsTitleSmall"
+		        android:layout_below="@id/tvTotalResult"
+		        android:layout_alignLeft="@id/tvTotalResult"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/last_7_days" />
+
+     		<TextView
+		        android:id="@+id/tvLast7DaysResult"
+		        style="@style/reportsResultSmall"
+		        android:layout_marginTop="5dp"
+		        android:layout_below="@id/tvLast7Days"
+		        android:layout_alignLeft="@id/tvLast7Days"
+		        android:text="@string/last_7_days" />
+	   	    	
+	   	    <TextView
+		        android:id="@+id/tvLast15Days"
+		        style="@style/reportsTitleSmall"
+		        android:layout_below="@id/tvLast7DaysResult"
+		        android:layout_alignLeft="@id/tvLast7DaysResult"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/last_15_days" />
+
+	   	    <TextView
+		        android:id="@+id/tvLast15DaysResult"
+		        style="@style/reportsResultSmall"
+		        android:layout_below="@id/tvLast15Days"
+		        android:layout_alignLeft="@id/tvLast15Days"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/last_15_days" />
+
+	         <Button
+	            android:id="@+id/btListScores"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/tvLast15DaysResult"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:onClick="listScores"
+		        android:text="@string/list_scores" />	         
+	         
+	         <Button
+	            android:id="@+id/btCloseReport"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/btListScores"
+		        android:layout_marginBottom="10dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:text="@string/close" />
+		        
+	    </RelativeLayout>
+	    
+	    <LinearLayout 
+	        android:id="@+id/llFooter"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_below="@id/rlBody"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:background="@color/green">
+		</LinearLayout>		
+	        
+	</RelativeLayout>
+</ScrollView>
