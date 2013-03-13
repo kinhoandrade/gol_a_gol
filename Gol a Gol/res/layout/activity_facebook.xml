@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+	    android:id="@+id/ivFacebookLogoFb"
+	    android:layout_width="153dp"
+	    android:layout_height="46dp"
+	    android:contentDescription="@string/banner"
+	    android:layout_marginTop="10dp"
+	    android:layout_centerHorizontal="true"
+	    android:onClick="onClick"
+	    android:src="@drawable/facebook" />
+    
+    <Button
+        android:id="@+id/btCancelFb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivFacebookLogoFb"
+        android:layout_centerVertical="true"
+        android:text="@string/cancel" />
+
+</RelativeLayout>
