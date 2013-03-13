@@ -19,8 +19,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".SaveScore"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_save_score" >
+            android:label="@string/title_activity_save_score"
+            android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,24 +29,24 @@
         </activity>
         <activity
             android:name=".ConfirmScore"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_confirm_score" >
+            android:label="@string/title_activity_confirm_score"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
         <activity
             android:name=".Config"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_config" >
+            android:label="@string/title_activity_config"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
         <activity
             android:name=".ScoreReport"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_score_report" >
+            android:label="@string/title_activity_score_report"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
@@ -55,14 +55,23 @@
         </activity>
         <activity
             android:name=".ListScores"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_list_scores" >
+            android:label="@string/title_activity_list_scores"
+            android:windowSoftInputMode="stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oranz.golagol.SaveScore" />
+        </activity>
+        <activity
+            android:name=".FacebookActivity"
+            android:label="@string/title_activity_facebook" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oranz.golagol.SaveScore" />
         </activity>
 
-        <meta-data android:value="@string/app_id" android:name="com.facebook.sdk.ApplicationId"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
     </application>
 
 </manifest>

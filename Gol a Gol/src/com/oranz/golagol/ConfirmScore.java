@@ -63,32 +63,11 @@ public class ConfirmScore extends Activity {
     	Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
     
-	public void postOnFacebook(View view){
-        switch (view.getId()) {
-        case R.id.ivFacebookLogo:
-        	
-        	// start Facebook Login
-        	Session.openActiveSession(this, true, new Session.StatusCallback(){
-        		
-        		// callback when session change state
-        		public void call(Session session, SessionState state, Exception exception){
-        			if(session.isOpened()){
-        				
-        				// make request to the API
-        				Request.executeMeRequestAsync(session, new Request.GraphUserCallback(){
-        					
-        					// callback after Graph API response with user object
-							public void onCompleted(GraphUser user, Response response) {
-								fbUser = user;
-								if(fbUser != null){
-						        	Toast.makeText(getApplicationContext(), "Olá " + user.getName(), Toast.LENGTH_LONG).show();
-								}								
-							}
-						});
-        			}
-        		}
-        	});     	
-        }
+	public void postOnFacebook(View view){    	
+    	Intent nextScreen = new Intent(getApplicationContext(), FacebookActivity.class);
+    	
+      	nextScreen.putExtra("origin", "main");
+    	startActivity(nextScreen);
 	}
 	
     public void openConfig(View view){
