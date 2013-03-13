@@ -24,6 +24,9 @@
     <string name="textConfirm">vazio</string>
 
     <color name="grey">#BBB</color>
+    
+    <string name="post_on_fb">Postar no Facebook</string>    
+    <string name="log_to_fb">Logar no Facebook</string>
 
     <string name="close">Fechar</string>
     <string name="title_activity_config">Gol a Gol - Configurações</string>

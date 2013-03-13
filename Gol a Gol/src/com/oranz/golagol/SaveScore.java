@@ -48,6 +48,7 @@ public class SaveScore extends Activity {
 	private static List<String> listArenas;
 	private static String nickname;
 	private static String fullname;
+	private static String message;
 	
 	private static Context appContext;
 	private static String fbId = "318684344914920"; 
@@ -447,5 +448,13 @@ public class SaveScore extends Activity {
 	
 	public static String getNickname(){
 		return nickname;
+	}
+	
+	public static void setMessage(String msg){
+		message = msg;
+	}
+	
+	public static String getMessage(){
+		return message;
 	}
 }

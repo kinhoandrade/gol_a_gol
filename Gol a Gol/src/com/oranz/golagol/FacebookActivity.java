@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
@@ -17,12 +18,19 @@ public class FacebookActivity extends Activity implements DialogListener,
 
     private Facebook facebookClient;
     private Button btCancel;
+    private Button btPostToFb;
+    private Boolean isLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_facebook);//my layout xml
+        
+        btPostToFb = (Button) findViewById(R.id.btPostOnFb);
+        btPostToFb.setVisibility(1);
+        
+        isLogged = false;
         
         btCancel = (Button) findViewById(R.id.btCancelFb);
         
@@ -82,5 +90,31 @@ public class FacebookActivity extends Activity implements DialogListener,
             facebookClient = new Facebook((getResources().getString(R.string.app_id)));
             // replace APP_API_ID with your own
             facebookClient.authorize(this, new String[] {"publish_stream"}, this);
+    	  	btPostToFb.setVisibility(0);            
+    	  	isLogged = true;
+    }
+    
+    @SuppressWarnings("deprecation")
+	public void post(View v){
+    	if (isLogged){
+	        try
+	        {
+	            Bundle parameters = new Bundle();
+	            parameters.putString("name", "Gol a Gol Mobile");
+	            parameters.putString("link", "https://play.google.com/store/apps/details?id=com.oranz.golagol");
+	            parameters.putString("caption", "É Rede!");
+	            parameters.putString("description", SaveScore.getMessage());
+	            parameters.putString("picture", "https://lh6.ggpht.com/sr7ZH7i6faeE2XbTPu29zp5S3rhnVFaeA1Yu2RXg-wGsseX6p-y7mFukknhD92U3wA=w124");
+	
+	            facebookClient.dialog(this, "stream.publish", parameters, this);// "stream.publish" is an API call
+	        }
+	        catch (Exception e)
+	        {
+	            // TODO: handle exception
+	            System.out.println(e.getMessage());
+	        }
+    	}else{
+    		Toast.makeText(this,"Você precisa logar antes de postar!", Toast.LENGTH_LONG).show();
+    	}
     }
 }

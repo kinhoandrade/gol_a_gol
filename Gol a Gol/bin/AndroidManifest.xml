@@ -12,6 +12,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
     </permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:icon="@drawable/ic_launcher"

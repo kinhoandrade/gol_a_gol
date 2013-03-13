@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.facebook.*;
-import com.facebook.model.*;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
 
 public class ConfirmScore extends Activity {
 	
@@ -20,6 +21,7 @@ public class ConfirmScore extends Activity {
 	private TextView tvDateConfirm;
 	private Button btCancel;
 	private Button btOk;
+	private ToggleButton tbPostOnFb;
 	private GraphUser fbUser;
 
     @Override
@@ -32,6 +34,7 @@ public class ConfirmScore extends Activity {
         tvDateConfirm = (TextView) findViewById(R.id.tvDateConfirm);
         btCancel = (Button) findViewById(R.id.btCancel);
         btOk = (Button) findViewById(R.id.btOk);
+        tbPostOnFb = (ToggleButton) findViewById(R.id.tbPostFb);
         
         final String arena = SaveScore.getArena();
         tvArenaConfirm.setText(arena);
@@ -52,6 +55,18 @@ public class ConfirmScore extends Activity {
         
         btCancel.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
         btOk.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {
+        	String msg = SaveScore.getNickname() + " tá marcando gol!";
+        	if(tbPostOnFb.isChecked()){
+        		if (quantity == 0){
+        			msg = SaveScore.getNickname() + " não fez nenhum gol no estádio " + arena + " em " + (date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH) + 1));
+        		}else if (quantity == 1){
+            		msg = SaveScore.getNickname() + " fez " + quantity + " gol no estádio " + arena + " em " + (date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH) + 1));
+        		}else{
+        			msg = SaveScore.getNickname() + " fez " + quantity + " gols no estádio " + arena + " em " + (date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH) + 1));
+        		}
+        		SaveScore.setMessage(msg);
+        		postOnFacebook();
+        	}
         	SaveScore.registerScoreConfirmed(arena, quantity, date);
         	finish();
         	}
@@ -63,7 +78,7 @@ public class ConfirmScore extends Activity {
     	Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
     
-	public void postOnFacebook(View view){    	
+	public void postOnFacebook(){    	
     	Intent nextScreen = new Intent(getApplicationContext(), FacebookActivity.class);
     	
       	nextScreen.putExtra("origin", "main");
