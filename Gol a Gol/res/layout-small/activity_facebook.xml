@@ -50,14 +50,14 @@
 			    android:contentDescription="@string/banner"
 			    android:layout_marginTop="10dp"
 			    android:layout_centerHorizontal="true"
-			    android:src="@drawable/facebook" />
+			    android:src="@drawable/fb_redlogo" />
 	        
 	       <ImageView
 		        android:id="@+id/btLogToFb"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_below="@id/ivFacebookLogoFb"
-		        android:layout_marginTop="40dp"
+		        android:layout_marginTop="20dp"
 		        android:layout_centerVertical="true"
 			    android:contentDescription="@string/banner"
 			    android:layout_centerHorizontal="true"
@@ -83,7 +83,7 @@
 		       android:layout_height="wrap_content"
 		       android:layout_below="@id/btPostOnFb"
 		       android:layout_centerVertical="true"
-		        android:layout_marginTop="100dp"
+		        android:layout_marginTop="40dp"
 		       android:text="@string/close" />
           
 	        		        

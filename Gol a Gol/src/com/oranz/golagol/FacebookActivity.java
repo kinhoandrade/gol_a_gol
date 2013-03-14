@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.android.DialogError;
@@ -18,8 +19,9 @@ public class FacebookActivity extends Activity implements DialogListener,
 
     private Facebook facebookClient;
     private Button btCancel;
-    private Button btPostToFb;
     private Boolean isLogged;
+    private ImageView btPostToFb;
+    private ImageView ivFacebookLogoFb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,8 +29,11 @@ public class FacebookActivity extends Activity implements DialogListener,
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_facebook);//my layout xml
         
-        btPostToFb = (Button) findViewById(R.id.btPostOnFb);
+        btPostToFb = (ImageView) findViewById(R.id.btPostOnFb);
         btPostToFb.setVisibility(1);
+        
+        ivFacebookLogoFb = (ImageView) findViewById(R.id.ivFacebookLogoFb);
+        btPostToFb.setVisibility(View.INVISIBLE);
         
         isLogged = false;
         
@@ -90,8 +95,9 @@ public class FacebookActivity extends Activity implements DialogListener,
             facebookClient = new Facebook((getResources().getString(R.string.app_id)));
             // replace APP_API_ID with your own
             facebookClient.authorize(this, new String[] {"publish_stream"}, this);
-    	  	btPostToFb.setVisibility(0);            
+    	  	btPostToFb.setVisibility(View.VISIBLE);
     	  	isLogged = true;
+    	  	//ivFacebookLogoFb.setImageResource(R.drawable.fb_greenlogo);
     }
     
     @SuppressWarnings("deprecation")
@@ -110,7 +116,6 @@ public class FacebookActivity extends Activity implements DialogListener,
 	        }
 	        catch (Exception e)
 	        {
-	            // TODO: handle exception
 	            System.out.println(e.getMessage());
 	        }
     	}else{

@@ -88,10 +88,8 @@ public class ConfirmScore extends Activity {
     public void openConfig(View view){
         switch (view.getId()) {
         case R.id.ivConfig:	    	
-	    	//Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
-	    	//startActivity(nextScreen);
-
-        	Toast.makeText(getApplicationContext(), "Olá " + fbUser.getName(), Toast.LENGTH_LONG).show();
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	startActivity(nextScreen);
         }
     }
     

@@ -127,7 +127,7 @@ public class SaveScore extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.2\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v1.3\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
@@ -356,6 +356,8 @@ public class SaveScore extends Activity {
     	db.open();
         db.registerScore(arena, quantity, date);
         db.close();
+        
+		Toast.makeText(appContext,"Gols gravados com sucesso!", Toast.LENGTH_LONG).show();
     }
     
     public static List<Score> getAllScores(){
@@ -456,5 +458,13 @@ public class SaveScore extends Activity {
 	
 	public static String getMessage(){
 		return message;
+	}
+
+	public static Context getAppContext() {
+		return appContext;
+	}
+
+	public static void setAppContext(Context appContext) {
+		SaveScore.appContext = appContext;
 	}
 }

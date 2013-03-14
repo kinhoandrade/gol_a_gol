@@ -210,15 +210,19 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_background_gradient=0x7f02001f;
         public static final int facebook=0x7f020020;
         public static final int facebook_logo=0x7f020021;
-        public static final int ic_action_search=0x7f020022;
-        public static final int ic_launcher=0x7f020023;
-        public static final int icon=0x7f020024;
-        public static final int menu_button=0x7f020025;
-        public static final int scoreboard=0x7f020026;
-        public static final int scoreboard2=0x7f020027;
-        public static final int scoreboard_small=0x7f020028;
-        public static final int setting_icon=0x7f020029;
-        public static final int setting_icon_small=0x7f02002a;
+        public static final int fb_connect=0x7f020022;
+        public static final int fb_greenlogo=0x7f020023;
+        public static final int fb_posttowall=0x7f020024;
+        public static final int fb_redlogo=0x7f020025;
+        public static final int ic_action_search=0x7f020026;
+        public static final int ic_launcher=0x7f020027;
+        public static final int icon=0x7f020028;
+        public static final int menu_button=0x7f020029;
+        public static final int scoreboard=0x7f02002a;
+        public static final int scoreboard2=0x7f02002b;
+        public static final int scoreboard_small=0x7f02002c;
+        public static final int setting_icon=0x7f02002d;
+        public static final int setting_icon_small=0x7f02002e;
     }
     public static final class id {
         public static final int FacebookShareButton=0x7f040047;
