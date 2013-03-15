@@ -41,10 +41,11 @@
     <string name="last_15_days">Últimos 15 dias:</string>
     <string name="last_7_days">Últimos 7 dias:</string>
     <string name="create">Criar</string>
+    <string name="update">Atualizar</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
     <string name="nickname">Apelido</string>
-    <string name="fullname">Nome Completo</string>
+    <string name="email">Email</string>
     <string name="title_activity_list_scores">Gol a Gol - Lista de Gols</string>
     <string name="test">Teste</string>
     <string name="list_scores">Listar Gols</string>

@@ -21,7 +21,6 @@ public class FacebookActivity extends Activity implements DialogListener,
     private Button btCancel;
     private Boolean isLogged;
     private ImageView btPostToFb;
-    private ImageView ivFacebookLogoFb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,9 +29,6 @@ public class FacebookActivity extends Activity implements DialogListener,
         this.setContentView(R.layout.activity_facebook);//my layout xml
         
         btPostToFb = (ImageView) findViewById(R.id.btPostOnFb);
-        btPostToFb.setVisibility(1);
-        
-        ivFacebookLogoFb = (ImageView) findViewById(R.id.ivFacebookLogoFb);
         btPostToFb.setVisibility(View.INVISIBLE);
         
         isLogged = false;
@@ -98,6 +94,7 @@ public class FacebookActivity extends Activity implements DialogListener,
     	  	btPostToFb.setVisibility(View.VISIBLE);
     	  	isLogged = true;
     	  	//ivFacebookLogoFb.setImageResource(R.drawable.fb_greenlogo);
+    	  	Toast.makeText(this,"Conectando...", Toast.LENGTH_LONG).show();
     }
     
     @SuppressWarnings("deprecation")
@@ -113,6 +110,7 @@ public class FacebookActivity extends Activity implements DialogListener,
 	            parameters.putString("picture", "https://lh6.ggpht.com/sr7ZH7i6faeE2XbTPu29zp5S3rhnVFaeA1Yu2RXg-wGsseX6p-y7mFukknhD92U3wA=w124");
 	
 	            facebookClient.dialog(this, "stream.publish", parameters, this);// "stream.publish" is an API call
+	            Toast.makeText(this,"Publicando...", Toast.LENGTH_LONG).show();
 	        }
 	        catch (Exception e)
 	        {

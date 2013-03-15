@@ -47,7 +47,7 @@ public class SaveScore extends Activity {
 	private static Calendar date;
 	private static List<String> listArenas;
 	private static String nickname;
-	private static String fullname;
+	private static String email;
 	private static String message;
 	
 	private static Context appContext;
@@ -101,9 +101,14 @@ public class SaveScore extends Activity {
         
         if (drop == false){
         	refreshNickname();
+        	refreshEmail();
 
 	        if(nickname == null || nickname.equalsIgnoreCase("")){
-	        	createNickname2();
+	        	createRegister();
+	        }
+	        
+	        if(email == null || email.equalsIgnoreCase("")){
+	        	createRegister();
 	        }        
         }
     }
@@ -127,7 +132,7 @@ public class SaveScore extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.3\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v1.5\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
@@ -181,7 +186,7 @@ public class SaveScore extends Activity {
     public void refreshNickname(){
     	nickname = "";
     	db.open();
-        Cursor cursor = db.getNickname();
+        Cursor cursor = db.getRegister();
         cursor.moveToFirst();
     	while (cursor.isAfterLast() == false){ 
     		nickname = cursor.getString(cursor.getColumnIndex("nickname"));
@@ -191,74 +196,59 @@ public class SaveScore extends Activity {
         cursor.close();
     }
     
-	public void createNickname(){
-        AlertDialog.Builder editalert = new AlertDialog.Builder(this);
-
-        editalert.setTitle("Apelido");
-        editalert.setMessage("Identifique-se");
-
-        etNickname = new EditText(this);
-        etFullname = new EditText(this);
-        @SuppressWarnings("deprecation")
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
-        etNickname.setLayoutParams(lp);
-        etNickname.setHeight(100);
-        editalert.setView(etNickname);
-        etFullname.setLayoutParams(lp);
-        etFullname.setHeight(100);
-        editalert.setView(etFullname);
-
-        editalert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                nickname = etNickname.getText().toString();
-                fullname = etFullname.getText().toString();
-                
-                db.open();
-                db.insertNickname(nickname, fullname);
-                db.close();
-            }
-        });
-
-        editalert.show();    	
+    public void refreshEmail(){
+    	email = "";
+    	db.open();
+        Cursor cursor = db.getRegister();
+        cursor.moveToFirst();
+    	while (cursor.isAfterLast() == false){ 
+    		email = cursor.getString(cursor.getColumnIndex("fullname"));
+    		cursor.moveToNext();
+    	}
+        db.close();
+        cursor.close();
     }
-    
-	public void createNickname2(){
+        
+	public void createRegister(){
     	LayoutInflater factory = LayoutInflater.from(this);
 
         final View textEntryView = factory.inflate(R.layout.layout_dialog_register, null);
-           //text_entry is an Layout XML file containing two text field to display in alert dialog
 
         final EditText etNickname = (EditText) textEntryView.findViewById(R.id.etNickname);
-        final EditText etFullname = (EditText) textEntryView.findViewById(R.id.etFullname);
+        final EditText etEmail = (EditText) textEntryView.findViewById(R.id.etEmail);
         
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setIcon(R.drawable.icon).setTitle("Identificação").setView(textEntryView).setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
-           public void onClick(DialogInterface dialog,
-             int whichButton) {
+           public void onClick(DialogInterface dialog, int whichButton) {
             
         	   nickname = etNickname.getText().toString();
-               fullname = etFullname.getText().toString();
+               email = etEmail.getText().toString();
                
                if(nickname == "" || nickname.equalsIgnoreCase("")){
-            	   String mensagem = "Você precisa se identificar";
+            	   String mensagem = "Você precisa escolher um apelido";
             	   Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
-            	   createNickname2();
+            	   createRegister();
                }
+
+               if(email == "" || email.equalsIgnoreCase("") || !(email.contains("@")) || !(email.contains("."))){
+            	   String mensagem = "Você precisa inserir um email válido";
+            	   Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
+            	   createRegister();
+               }               
                
                db.open();
-               db.insertNickname(nickname, fullname);
+               db.insertNickname(nickname, email);
                db.close();
         	   
         	   String mensagem = "Olá, " + nickname;
         	   Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
            }
-          }).setNegativeButton("Cancelar",
-          new DialogInterface.OnClickListener() {
+          }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog,
              int whichButton) {
         	   String mensagem = "Você precisa se identificar";
         	   Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
-        	   createNickname2();
+        	   createRegister();
            }
           });
         alert.show();
@@ -269,13 +259,12 @@ public class SaveScore extends Activity {
         case R.id.btRegisterScore:
         	refreshNickname();
         	if (nickname == null || nickname.equalsIgnoreCase("")){
-        		createNickname2();
+        		createRegister();
         		return;
         	}
         	
 	        if (etQuantidade.getText().length() == 0 || Float.parseFloat(etQuantidade.getText().toString()) <= 0) {
 	        	String mensagem = "";
-	        	//mensagem = findViewById(R.string.msgQuantityNull).toString();
 	        	mensagem = "Só faltou falar quantos gols!";
 	            Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
 	            return;
@@ -299,18 +288,16 @@ public class SaveScore extends Activity {
         case R.id.btRegisterScoreSmall:
         	refreshNickname();
         	if (nickname == null || nickname.equalsIgnoreCase("")){
-        		createNickname2();
+        		createRegister();
         		return;
         	}
         	
 	        if (etQuantidade.getText().length() == 0 || Float.parseFloat(etQuantidade.getText().toString()) <= 0) {
 	        	String mensagem = "";
-	        	//mensagem = findViewById(R.string.msgQuantityNull).toString();
 	        	mensagem = "Só faltou falar quantos gols!";
 	            Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
 	            return;
-	        }
-	        
+	        }	        
 	    	
 	    	Intent nextScreen = new Intent(getApplicationContext(), ConfirmScore.class);
 	    	
@@ -406,7 +393,6 @@ public class SaveScore extends Activity {
     }
     
     public static boolean removeArena(String nm_arena){
-    	printAllScores();
     	db.open();
     	boolean hasScore = false;
     	Cursor cursor = db.getScoresByArena(nm_arena);
@@ -448,10 +434,6 @@ public class SaveScore extends Activity {
 		return date;
 	}
 	
-	public static String getNickname(){
-		return nickname;
-	}
-	
 	public static void setMessage(String msg){
 		message = msg;
 	}
@@ -466,5 +448,37 @@ public class SaveScore extends Activity {
 
 	public static void setAppContext(Context appContext) {
 		SaveScore.appContext = appContext;
+	}	
+
+	public static String getNickname() {
+		return nickname;
 	}
+
+	public static void setNickname(String nickname) {
+		SaveScore.nickname = nickname;
+
+		try{
+	    	db.open();
+			db.updateRegister(nickname, email);
+			db.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public static String getEmail() {
+		return email;
+	}
+
+	public static void setEmail(String email) {
+		SaveScore.email = email;
+
+		try{
+	    	db.open();
+			db.updateRegister(nickname, email);
+			db.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}	
 }

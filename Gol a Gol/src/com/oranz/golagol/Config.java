@@ -12,6 +12,8 @@ import android.widget.Toast;
 public class Config extends Activity {
 	private Button btClose;
 	private EditText etCreateArena;
+	private EditText etNickname;
+	private EditText etEmail;
 	private Spinner spArenasConfig;
 
     @Override
@@ -21,6 +23,8 @@ public class Config extends Activity {
         
         btClose = (Button) findViewById(R.id.btCloseConfig);
         etCreateArena = (EditText) findViewById(R.id.etArenaConfig);
+        etNickname = (EditText) findViewById(R.id.etNickname);
+        etEmail = (EditText) findViewById(R.id.etEmail);
         spArenasConfig = (Spinner) findViewById(R.id.spArenasConfig);
         
         try{
@@ -28,6 +32,9 @@ public class Config extends Activity {
         }catch(Exception e){
         	e.printStackTrace();
         }
+        
+        etNickname.setText(SaveScore.getNickname());
+        etEmail.setText(SaveScore.getEmail());
         
         btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {
 	        	try {
@@ -71,8 +78,7 @@ public class Config extends Activity {
     
     public void createArena(View view){
         switch (view.getId()) {
-        case R.id.btCreateArena:
-        	
+        case R.id.btCreateArena:        	
         	String arena = etCreateArena.getText().toString();
         	
         	if(arena.trim().equals("")){	        
@@ -86,4 +92,36 @@ public class Config extends Activity {
         }
     }
     
+    public void updateNickname(View view){
+    	switch (view.getId()) {
+        case R.id.btUpdateNickName:        	
+        	String nickname = etNickname.getText().toString();
+        	
+        	if(nickname.trim().equals("")){	        
+            	Toast.makeText(this, "Necessário informar o apelido", Toast.LENGTH_LONG).show();
+            	return;
+        	}
+        	
+        	SaveScore.setNickname(nickname);
+     	           	
+        	Toast.makeText(this, "Apelido atualizado para: " + nickname, Toast.LENGTH_LONG).show();
+        }
+    }    
+    
+    public void updateEmail(View view){
+    	switch (view.getId()) {
+        case R.id.btUpdateEmail:        	
+        	String email = etEmail.getText().toString();
+        	
+        	if(email == "" || email.equalsIgnoreCase("") || !(email.contains("@")) || !(email.contains("."))){	        
+        		String mensagem = "Você precisa inserir um email válido";
+         	   	Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
+            	return;
+        	}
+        	
+        	SaveScore.setEmail(email);
+
+        	Toast.makeText(this, "Email atualizado para: " + email, Toast.LENGTH_LONG).show();
+        }
+    }    
 }

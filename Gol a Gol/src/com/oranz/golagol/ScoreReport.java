@@ -34,8 +34,6 @@ public class ScoreReport extends Activity {
         int last15days = SaveScore.getTotal(15);
         tvLast15days.setText("" + last15days);
         
-        SaveScore.printAllScores();
-        
         btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
     }
 

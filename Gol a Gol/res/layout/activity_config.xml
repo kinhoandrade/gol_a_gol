@@ -68,7 +68,7 @@
 		        android:layout_below="@id/etArenaConfig"
 		        android:layout_centerHorizontal="true"
 		        android:layout_marginBottom="10dp"
-		        android:layout_marginTop="20dp"
+		        android:layout_marginTop="5dp"
 		        android:layout_marginRight="10dp"
 		        android:layout_marginLeft="10dp"
 		        android:onClick="createArena"
@@ -107,6 +107,73 @@
 			        android:layout_alignParentRight="true"
 			        android:onClick="removeArena"
 			        android:text="@string/remove" />
+			    
+			    <TextView
+		            android:id="@+id/tvNickname"
+			        style="@style/defaultFont"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginLeft="10dp"        
+			        android:layout_below="@id/btRemoveArena"
+			        android:text="@string/nickname"/>
+   	        	        
+  	        	<EditText	
+	   	            android:id="@+id/etNickname"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/tvNickname"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:ems="10"
+			        android:inputType="textPersonName" />
+  	        	
+   	   	        <Button
+	   	            android:id="@+id/btUpdateNickName"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/etNickname"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginBottom="10dp"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:onClick="updateNickname"
+			        android:text="@string/update" />
+  	        	
+  	        	<TextView
+		            android:id="@+id/tvEmail"
+			        style="@style/defaultFont"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginLeft="10dp"        
+			        android:layout_below="@id/btUpdateNickName"
+			        android:text="@string/email"/>
+   	        	        
+  	        	<EditText	
+	   	            android:id="@+id/etEmail"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/tvEmail"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:ems="10"
+			        android:inputType="textEmailAddress" />			    
+
+   	   	        <Button
+	   	            android:id="@+id/btUpdateEmail"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/etEmail"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginBottom="10dp"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:onClick="updateEmail"
+			        android:text="@string/update" />
+  	        				    
    	        </RelativeLayout>
 		        
 			<Button

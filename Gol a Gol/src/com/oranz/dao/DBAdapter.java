@@ -202,7 +202,7 @@ public class DBAdapter
         return retorno;
     }
     
-    public Cursor getNickname() 
+    public Cursor getRegister() 
     {
         return db.query(DATABASE_TABLE, new String[] {
         		KEY_ROWID, 
@@ -341,13 +341,12 @@ public class DBAdapter
     	}
     	return cursor;
     }
-       
-    //---updates a title---
-    public boolean updateRegister(long rowId, String nickname, int user_id) 
+    
+    public boolean updateRegister(String nickname, String email) 
     {
         ContentValues args = new ContentValues();
         args.put(KEY_NICKNAME, nickname);
-        args.put(KEY_USER_ID, user_id);
-        return db.update(DATABASE_TABLE2, args, KEY_ROWID + "=" + rowId, null) > 0;
+        args.put(KEY_FULLNAME, email);
+        return db.update(DATABASE_TABLE, args, KEY_ROWID + ">" + 0, null) > 0;
     }
 }
