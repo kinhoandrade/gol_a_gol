@@ -7,12 +7,14 @@
 
     <color name="green">#003300</color>
     <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="gray">#EEE</color>
+    <color name="graydarker">#555</color>
 
     <string name="umazero">1 x 0</string>
     <string name="banner">Banner</string>
     <string name="arena">Arena</string>
 
-    <color name="black">#000</color>
 
     <string name="date">Data</string>
     <string name="quantity">Quantos gols?</string>
@@ -24,10 +26,9 @@
     <string name="textConfirm">vazio</string>
 
     <color name="grey">#BBB</color>
-    
-    <string name="post_on_fb">Postar no Facebook</string>    
-    <string name="log_to_fb">Logar no Facebook</string>
 
+    <string name="post_on_fb">Postar no Facebook</string>
+    <string name="log_to_fb">Logar no Facebook</string>
     <string name="close">Fechar</string>
     <string name="title_activity_config">Gol a Gol - Configurações</string>
     <string name="configurations">[Configurações]</string>
@@ -52,6 +53,8 @@
     <string name="title_activity_test_connect">TestConnect</string>
     <string name="app_id">318684344914920</string>
     <string name="export">Exportar</string>
-    <string name="title_activity_facebook">FacebookActivity</string>
+    <string name="title_activity_facebook">Gol a Gol - Publicar no Facebook</string>
+    <string name="empty"></string>
+    <string name="title_activity_intro">Gol a Gol</string>
 
 </resources>

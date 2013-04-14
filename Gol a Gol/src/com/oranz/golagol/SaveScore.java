@@ -3,6 +3,7 @@ package com.oranz.golagol;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -21,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -132,7 +132,7 @@ public class SaveScore extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.5\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v1.7\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
@@ -341,10 +341,45 @@ public class SaveScore extends Activity {
     
     public static void registerScoreConfirmed(String arena, int quantity, Calendar date){
     	db.open();
-        db.registerScore(arena, quantity, date);
-        db.close();
-        
-		Toast.makeText(appContext,"Gols gravados com sucesso!", Toast.LENGTH_LONG).show();
+    	int cd_to_update = 0;
+    	
+    	List<Score> scores = getAllScores();
+    	
+    	boolean validator = true;
+    	
+    	date.set(Calendar.HOUR_OF_DAY, 0);
+    	date.set(Calendar.MINUTE, 0);
+    	date.set(Calendar.SECOND, 0);
+    	date.set(Calendar.MILLISECOND, 0);
+		    	
+    	for (Score score : scores) {
+    		Date scoreDate = score.getDate();
+    		Calendar myCal = new GregorianCalendar();
+    		myCal.setTime(scoreDate);
+    		myCal.set(Calendar.HOUR_OF_DAY, 0);
+        	myCal.set(Calendar.MINUTE, 0);
+        	myCal.set(Calendar.SECOND, 0);
+        	myCal.set(Calendar.MILLISECOND, 0);
+        	
+			if(myCal.equals(date) && arena.trim().equalsIgnoreCase(score.getArena().trim())){
+				validator = false;
+				cd_to_update = score.getCd_score();
+			}
+			System.out.println(myCal.getTimeInMillis());
+		}
+    	
+
+		System.out.println(date.getTimeInMillis());
+    	
+    	if(validator == true){
+	        db.registerScore(arena, quantity, date);	        
+			Toast.makeText(appContext,"Gols gravados com sucesso!", Toast.LENGTH_LONG).show();
+	        db.close();
+    	} else {
+    		db.updateScore(quantity, cd_to_update);
+    		Toast.makeText(appContext,"Gols atualizados.", Toast.LENGTH_LONG).show();
+	        db.close();
+    	}
     }
     
     public static List<Score> getAllScores(){
@@ -357,6 +392,7 @@ public class SaveScore extends Activity {
     		Score scoreAux = new Score();
     		scoreAux.setArena(cursor.getString(cursor.getColumnIndex("nm_arena")));
     		scoreAux.setQuantity(cursor.getInt(cursor.getColumnIndex("score_quantity")));
+    		scoreAux.setCd_score(cursor.getInt(cursor.getColumnIndex("_id")));
     		long longAux= cursor.getLong(cursor.getColumnIndex("score_date"));
     		Date myDateNew = new Date(longAux);
     		scoreAux.setDate(myDateNew);
@@ -480,5 +516,15 @@ public class SaveScore extends Activity {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	public static void removeRegister(String cd_score){
+		try{
+	    	db.open();
+			db.deleteScore(cd_score);
+			db.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

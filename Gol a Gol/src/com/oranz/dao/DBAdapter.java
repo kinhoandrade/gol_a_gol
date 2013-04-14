@@ -248,6 +248,33 @@ public class DBAdapter
         } 
         return retorno;
     }
+	
+	public long updateScore(int quantity, int cd_score){
+    	long retorno = 0;
+    	try{
+    		this.open();
+    		String query = "UPDATE "+DATABASE_TABLE3+" SET score_quantity = " + quantity + " WHERE _id = '" + cd_score + "'";  
+    		db.execSQL(query);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }finally{
+        	this.close();
+        } 
+        return retorno;
+    }
+    
+    public boolean updateRegister(String nickname, String email) 
+    {
+        ContentValues args = new ContentValues();
+        args.put(KEY_NICKNAME, nickname);
+        args.put(KEY_FULLNAME, email);
+        return db.update(DATABASE_TABLE, args, KEY_ROWID + ">" + 0, null) > 0;
+    }
+	
+	public boolean deleteScore(String cd_score) 
+    {
+        return db.delete(DATABASE_TABLE3, KEY_ROWID3 + "=" + cd_score, null) > 0;
+    }
     
     public Cursor getAllScores() 
     {
@@ -286,7 +313,6 @@ public class DBAdapter
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
-        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 15){
         		Date date_created = new Date();
@@ -299,7 +325,6 @@ public class DBAdapter
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
-        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}else if(qtd == 30){
     			//Calendar dateAux = Calendar.getInstance();
@@ -317,7 +342,6 @@ public class DBAdapter
     			    total = cursor.getInt(0);
             		cursor.moveToNext();
             	}
-        		System.out.println(query + " - " + total);
     	    	cursor.close();
         	}
     	}catch(Exception e){
@@ -331,22 +355,14 @@ public class DBAdapter
     public Cursor getScoresByArena(String nm_arena){
     	Cursor cursor = null;
     	try{
-    		String query = "SELECT case when arn.nm_arena is null then 'NÃO IDENTIFICADA' else arn.nm_arena end nm_arena, scr.score_quantity, scr.score_date FROM score scr LEFT OUTER JOIN arena arn ON arn._id = scr.arena_id";
+    		String query = "SELECT scr._id, case when arn.nm_arena is null then 'NÃO IDENTIFICADA' else arn.nm_arena end nm_arena, scr.score_quantity, scr.score_date FROM score scr LEFT OUTER JOIN arena arn ON arn._id = scr.arena_id";
     		if (!(nm_arena == null || nm_arena.trim().equals(""))){
-    			query = "SELECT arn.nm_arena, scr.score_quantity, scr.score_date FROM score scr INNER JOIN arena arn ON arn._id = scr.arena_id where arn.nm_arena = '" + nm_arena + "'";
+    			query = "SELECT scr._id, arn.nm_arena, scr.score_quantity, scr.score_date FROM score scr INNER JOIN arena arn ON arn._id = scr.arena_id where arn.nm_arena = '" + nm_arena + "'";
     		}
 	    	cursor = db.rawQuery(query, null);
     	}catch(Exception e){
     		e.printStackTrace();
     	}
     	return cursor;
-    }
-    
-    public boolean updateRegister(String nickname, String email) 
-    {
-        ContentValues args = new ContentValues();
-        args.put(KEY_NICKNAME, nickname);
-        args.put(KEY_FULLNAME, email);
-        return db.update(DATABASE_TABLE, args, KEY_ROWID + ">" + 0, null) > 0;
     }
 }

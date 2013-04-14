@@ -50,13 +50,6 @@ public class ScoreReport extends Activity {
 	    	startActivity(nextScreen);
         }
     }
-    
-	public void postOnFacebook(View view){
-        switch (view.getId()) {
-        case R.id.ivFacebookLogo:
-        	Toast.makeText(this, "Breve", Toast.LENGTH_LONG).show();
-        }
-	}
 	
 	public void listScores(View view){
         switch (view.getId()) {

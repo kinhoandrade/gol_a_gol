@@ -114,23 +114,32 @@
 		        android:layout_below="@id/tvDate"
 		        android:text="@string/date" />
 	         
-	         <ImageView
-			    android:id="@+id/ivFacebookLogo"
-			    android:layout_width="153dp"
-			    android:layout_height="46dp"
-			    android:contentDescription="@string/banner"
-			    android:layout_marginTop="10dp"
-			    android:layout_below="@id/tvDateConfirm"
-			    android:layout_centerHorizontal="true"
-			    android:onClick="postOnFacebook"
-			    android:src="@drawable/facebook" />
-
+   	         <TextView
+		        android:id="@+id/tvPostFb"
+		        style="@style/defaultFont"
+		        android:textSize="14dp"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
+		        android:layout_below="@id/tvDateConfirm"
+		        android:text="@string/post_on_fb" />
+	         
+	         	         
+		    <ToggleButton
+		        android:id="@+id/tbPostFb"
+		        android:layout_width="50dp"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
+		        android:layout_below="@id/tvPostFb"
+		        android:text="@string/post_on_fb" />
 	         
 	         <Button
 	            android:id="@+id/btOk"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_below="@id/ivFacebookLogo"
+		        android:layout_below="@id/tbPostFb"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginRight="10dp"
 		        android:layout_marginLeft="10dp"
