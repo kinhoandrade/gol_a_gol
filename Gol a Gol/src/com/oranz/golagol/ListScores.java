@@ -38,6 +38,9 @@ public class ListScores extends Activity {
 	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
     private SimpleAdapter notes;
     private ListView listView;
+    private List<String> scoresText;
+    private String email;
+	private String fileCompletePath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class ListScores extends Activity {
         btClose = (Button) findViewById(R.id.btCloseList);
         totalView = (TextView) findViewById(R.id.tvTotalList);
         listView = (ListView) findViewById(R.id.listScores);
+        
+        scoresText = new ArrayList<String>();
+        email = SaveScore.getEmail();
         
         notes = new SimpleAdapter( 
  				this, 
@@ -101,11 +107,12 @@ public class ListScores extends Activity {
     private void addItem(String date, String arena, String quantity, String id) {
   	  HashMap<String,String> item = new HashMap<String,String>();
   	  item.put( "date", "[" + date +"]" );
-  	  item.put( "arena", arena);
-  	  item.put( "quantity", quantity);
+  	  item.put( "arena", "Arena: " + arena.trim());
+  	  item.put( "quantity", "Gols: " + quantity);
   	  item.put( "id", id);
   	  list.add( item );
       notes.notifyDataSetChanged();
+      scoresText.add("email:" + email.trim() + ";date:" + date + ";arena:" + arena.replace(";", ".").replace(":","-").trim() + ";quantity:" + quantity);
   	}
     
 	public void filteredList(){
@@ -127,7 +134,7 @@ public class ListScores extends Activity {
         	Date dateAux = scoreAux.getDate();
         	Calendar myCal = Calendar.getInstance();
         	myCal.setTime(dateAux);
-			addItem((myCal.get(Calendar.DAY_OF_MONTH) + "/" + (myCal.get(Calendar.MONTH) + 1) + "/" + myCal.get(Calendar.YEAR)), ("Arena: " + scoreAux.getArena().toString()),("Gols: " + scoreAux.getQuantity()), "" + scoreAux.getCd_score());
+			addItem((myCal.get(Calendar.DAY_OF_MONTH) + "/" + (myCal.get(Calendar.MONTH) + 1) + "/" + myCal.get(Calendar.YEAR)), (scoreAux.getArena().toString()),("" + scoreAux.getQuantity()), "" + scoreAux.getCd_score());
 			total += scoreAux.getQuantity();
 		}
 
@@ -157,24 +164,30 @@ public class ListScores extends Activity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String directory = Environment.getExternalStorageDirectory().toString();
+        String filename = "golagol-data.csv";
+    	
         switch ( item.getItemId() ) {
-          case 1:   	
+          case 1: 
               Toast.makeText(this, "Exportando...", Toast.LENGTH_LONG).show();
-              export();
+              fileCompletePath = export(directory, filename);
+          	  Toast.makeText(this, "Exportado:\n" +  fileCompletePath, Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
-          case 2:  	
-              Toast.makeText(this, "Importando...", Toast.LENGTH_LONG).show();
-              importFile();
+          case 2:
+              importFile(directory + "/" + filename);
               return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
     
-    public boolean export(){
-    	String filename = "golagol-data.csv";
-    	File file = new File(Environment.getExternalStorageDirectory(), filename);
+    public String export(String directory, String filename){
+    	File file = new File(directory, filename);
     	FileOutputStream fos;
-    	byte[] data = new String("Gol a Gol").getBytes();
+    	String fullText = "";
+    	for(int i = 0; i < scoresText.size(); i++){
+    		fullText = fullText + (scoresText.get(i)) + "\n";
+    	}
+    	byte[] data = new String(fullText).getBytes();
     	try {
     	    fos = new FileOutputStream(file);
     	    fos.write(data);
@@ -185,33 +198,44 @@ public class ListScores extends Activity {
     	} catch (IOException e) {
     	    e.printStackTrace();
     	}
-    	return false;
+    	return Environment.getExternalStorageDirectory().toString() + "/" + filename;
     }
     
     @SuppressWarnings("resource")
-	public boolean importFile(){
-    	//Find the directory for the SD Card using the API
-    	//*Don't* hardcode "/sdcard"
-    	File sdcard = Environment.getExternalStorageDirectory();
+	public boolean importFile(final String fileCompletePath){
 
-    	File file = new File(sdcard,"golagol-data.csv");
-
-    	//Read text from file
-    	StringBuilder text = new StringBuilder();
-    	try {
-    	    BufferedReader br = new BufferedReader(new FileReader(file));
-    	    String line;
-
-    	    while ((line = br.readLine()) != null) {
-    	        text.append(line);
-    	        text.append('\n');
-    	    }
-    	}
-    	catch (IOException e) {
-    	    e.printStackTrace();
-    	}
-
-    	Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    	AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ListScores.this);
+       	myAlertDialog.setTitle("Importar registros");
+       	myAlertDialog.setMessage("Deseja importar os registros do arquivo " + fileCompletePath + "?");
+       	myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+       		public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(), "Importando\n" + fileCompletePath, Toast.LENGTH_LONG).show();
+		    	//Find the directory for the SD Card using the API
+		    	//*Don't* hardcode "/sdcard"
+		    	//File sdcard = Environment.getExternalStorageDirectory();
+		
+		    	File file = new File(fileCompletePath);
+		
+		    	//Read text from file
+		    	StringBuilder text = new StringBuilder();
+		    	try {
+		    	    BufferedReader br = new BufferedReader(new FileReader(file));
+		    	    String line;
+		
+		    	    while ((line = br.readLine()) != null) {
+		    	        text.append(line);
+		    	        text.append('\n');
+		    	    }
+		    	}
+		    	catch (IOException e) {
+		    	    e.printStackTrace();
+		    	}
+       			Toast.makeText(getApplicationContext(), "Arquivo importado.\n" + text, Toast.LENGTH_LONG).show();
+       	}});
+       	myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {       	       
+       		public void onClick(DialogInterface arg0, int arg1) { }});
+       	myAlertDialog.show();
+    	
     	    	
     	return false;
     }    
