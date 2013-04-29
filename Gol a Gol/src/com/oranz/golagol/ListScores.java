@@ -1,5 +1,11 @@
 package com.oranz.golagol;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +17,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
@@ -134,7 +143,76 @@ public class ListScores extends Activity {
     }
     
     public void openConfig(View view){
-	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);
 	    	startActivity(nextScreen);
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.onCreateOptionsMenu(menu);
+        menu.add(0, 1, Menu.NONE, R.string.export );
+        menu.add(0, 2, Menu.NONE, R.string.importfile );
+        return result;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ( item.getItemId() ) {
+          case 1:   	
+              Toast.makeText(this, "Exportando...", Toast.LENGTH_LONG).show();
+              export();
+              return super.onOptionsItemSelected(item);
+          case 2:  	
+              Toast.makeText(this, "Importando...", Toast.LENGTH_LONG).show();
+              importFile();
+              return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    public boolean export(){
+    	String filename = "golagol-data.csv";
+    	File file = new File(Environment.getExternalStorageDirectory(), filename);
+    	FileOutputStream fos;
+    	byte[] data = new String("Gol a Gol").getBytes();
+    	try {
+    	    fos = new FileOutputStream(file);
+    	    fos.write(data);
+    	    fos.flush();
+    	    fos.close();
+    	} catch (FileNotFoundException e) {
+    	    e.printStackTrace();
+    	} catch (IOException e) {
+    	    e.printStackTrace();
+    	}
+    	return false;
+    }
+    
+    @SuppressWarnings("resource")
+	public boolean importFile(){
+    	//Find the directory for the SD Card using the API
+    	//*Don't* hardcode "/sdcard"
+    	File sdcard = Environment.getExternalStorageDirectory();
+
+    	File file = new File(sdcard,"golagol-data.csv");
+
+    	//Read text from file
+    	StringBuilder text = new StringBuilder();
+    	try {
+    	    BufferedReader br = new BufferedReader(new FileReader(file));
+    	    String line;
+
+    	    while ((line = br.readLine()) != null) {
+    	        text.append(line);
+    	        text.append('\n');
+    	    }
+    	}
+    	catch (IOException e) {
+    	    e.printStackTrace();
+    	}
+
+    	Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    	    	
+    	return false;
+    }    
 }

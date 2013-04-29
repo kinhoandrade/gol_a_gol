@@ -139,7 +139,7 @@ public class SaveScore extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v2.1\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v2.2\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
