@@ -1,6 +1,7 @@
 package com.oranz.golagol;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -119,5 +120,17 @@ public class FacebookActivity extends Activity implements DialogListener,
     	}else{
     		Toast.makeText(this,"Você precisa logar antes de postar!", Toast.LENGTH_LONG).show();
     	}
+    }
+    
+    public void openMenu(View view){
+        switch (view.getId()) {
+        case R.id.ivMenu:
+        	openOptionsMenu();
+        }
+    }
+    
+    public void openConfig(View view){
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	startActivity(nextScreen);
     }
 }

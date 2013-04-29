@@ -49,6 +49,7 @@ public class SaveScore extends Activity {
 	private static String nickname;
 	private static String email;
 	private static String message;
+	private static String passwd;
 	
 	private static Context appContext;
 	private static String fbId = "318684344914920"; 
@@ -102,6 +103,7 @@ public class SaveScore extends Activity {
         if (drop == false){
         	refreshNickname();
         	refreshEmail();
+        	refreshPassword();
 
 	        if(nickname == null || nickname.equalsIgnoreCase("")){
 	        	createRegister();
@@ -128,11 +130,16 @@ public class SaveScore extends Activity {
         }
     }
     
+    public void openConfig(View view){
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	startActivity(nextScreen);
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
           case 1:   	
-              Toast.makeText(this, "Gol a Gol v1.7\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, "Gol a Gol v2.1\nDesenvolvido por Oranz", Toast.LENGTH_LONG).show();
               return super.onOptionsItemSelected(item);
           case 2:	    	
   	    	Intent nextScreen = new Intent(getApplicationContext(), ScoreReport.class);	    	
@@ -207,6 +214,13 @@ public class SaveScore extends Activity {
     	}
         db.close();
         cursor.close();
+    }
+    
+    public void refreshPassword(){
+    	passwd = "";
+    	db.open();
+        passwd = db.getPassword();
+        db.close();
     }
         
 	public void createRegister(){
@@ -449,14 +463,6 @@ public class SaveScore extends Activity {
         db.close();
         return false;
     }
-    
-    public void openConfig(View view){
-        switch (view.getId()) {
-        case R.id.ivConfig:	    	
-	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
-	    	startActivity(nextScreen);
-        }
-    }
 
 	public static String getArena() {
 		return arena;
@@ -491,8 +497,6 @@ public class SaveScore extends Activity {
 	}
 
 	public static void setNickname(String nickname) {
-		SaveScore.nickname = nickname;
-
 		try{
 	    	db.open();
 			db.updateRegister(nickname, email);
@@ -500,6 +504,32 @@ public class SaveScore extends Activity {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		SaveScore.nickname = nickname;
+	}
+	
+	public static void setPassword(String passwd) {
+		try{
+	    	db.open();	    	
+	    	String current_password = db.getPassword();
+	    	db.close();
+	    	
+	    	db.open();
+	    	if(current_password == null || "".equalsIgnoreCase(current_password)){
+	    		db.insertPassword(email, passwd);
+	    	}else {
+	    		db.updatePassword(email, passwd);
+	    	}
+			db.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			db.close();
+		}
+		SaveScore.passwd = passwd;
+	}
+	
+	public static String getPassword(){
+		return passwd;		
 	}
 
 	public static String getEmail() {
@@ -507,8 +537,6 @@ public class SaveScore extends Activity {
 	}
 
 	public static void setEmail(String email) {
-		SaveScore.email = email;
-
 		try{
 	    	db.open();
 			db.updateRegister(nickname, email);
@@ -516,6 +544,7 @@ public class SaveScore extends Activity {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		SaveScore.email = email;
 	}
 	
 	public static void removeRegister(String cd_score){

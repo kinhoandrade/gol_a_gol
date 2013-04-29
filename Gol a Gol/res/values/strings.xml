@@ -47,6 +47,7 @@
     <string name="ok">OK</string>
     <string name="nickname">Apelido</string>
     <string name="email">Email</string>
+    <string name="password">Senha</string>
     <string name="title_activity_list_scores">Gol a Gol - Lista de Gols</string>
     <string name="test">Teste</string>
     <string name="list_scores">Listar Gols</string>

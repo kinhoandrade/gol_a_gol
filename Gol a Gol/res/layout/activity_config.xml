@@ -35,7 +35,6 @@
 			    android:layout_toLeftOf="@id/ivMenu"
 			    android:layout_marginRight="50dp"
 			    android:layout_marginTop="5dp"
-			    android:onClick="openConfig"
 			    android:src="@drawable/setting_icon" />
 
    	        <TextView
@@ -169,7 +168,40 @@
 			        android:layout_marginLeft="10dp"
 			        android:onClick="updateEmail"
 			        android:text="@string/update" />
-  	        				    
+
+   	        	<TextView
+		            android:id="@+id/tvPassword"
+			        style="@style/defaultFont"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginLeft="10dp"        
+			        android:layout_below="@id/btUpdateEmail"
+			        android:text="@string/password"/>
+   	        	        
+  	        	<EditText	
+	   	            android:id="@+id/etPassword"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/tvPassword"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:ems="10"
+			        android:inputType="textWebPassword" />			    
+
+   	   	        <Button
+	   	            android:id="@+id/btUpdatePassword"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/etPassword"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginBottom="10dp"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginRight="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:onClick="updatePassword"
+			        android:text="@string/update" />   	   	        	   	        
+   	   	        	        				    
    	        </RelativeLayout>
 		        
 			<Button

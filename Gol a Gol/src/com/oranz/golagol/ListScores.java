@@ -9,6 +9,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -59,7 +60,7 @@ public class ListScores extends Activity {
 
 		       	AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ListScores.this);
 		       	myAlertDialog.setTitle("Apagar registro");
-		       	myAlertDialog.setMessage("Deseja apagar este Gol?\n" + score.get("arena") + " - Gols: " + score.get("quantity") + " - Data: " + score.get("date") );
+		       	myAlertDialog.setMessage("Deseja apagar este Gol?\n" + score.get("arena") + " - " + score.get("quantity") + "\nData: " + score.get("date") );
 		       	myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		       		public void onClick(DialogInterface arg0, int arg1) {
 		       			SaveScore.removeRegister(score.get("id"));
@@ -123,5 +124,17 @@ public class ListScores extends Activity {
 
         totalView.setVisibility(1);
         totalView.setText("\nTotal: " + total);   
+    }
+    
+    public void openMenu(View view){
+        switch (view.getId()) {
+        case R.id.ivMenu:
+        	openOptionsMenu();
+        }
+    }
+    
+    public void openConfig(View view){
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	startActivity(nextScreen);
     }
 }

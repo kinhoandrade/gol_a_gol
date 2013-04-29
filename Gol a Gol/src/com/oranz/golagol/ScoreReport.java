@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ScoreReport extends Activity {
 	private Button btClose;
@@ -42,14 +41,6 @@ public class ScoreReport extends Activity {
         getMenuInflater().inflate(R.menu.activity_score_report, menu);
         return true;
     }
-    
-    public void openConfig(View view){
-        switch (view.getId()) {
-        case R.id.ivConfig:	    	
-	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
-	    	startActivity(nextScreen);
-        }
-    }
 	
 	public void listScores(View view){
         switch (view.getId()) {
@@ -58,4 +49,16 @@ public class ScoreReport extends Activity {
 	    	startActivity(nextScreen);
         }
 	}
+    
+    public void openMenu(View view){
+        switch (view.getId()) {
+        case R.id.ivMenu:
+        	openOptionsMenu();
+        }
+    }
+    
+    public void openConfig(View view){
+    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+    	startActivity(nextScreen);
+    }
 }

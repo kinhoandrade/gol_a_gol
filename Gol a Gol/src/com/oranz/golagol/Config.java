@@ -1,6 +1,7 @@
 package com.oranz.golagol;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +15,7 @@ public class Config extends Activity {
 	private EditText etCreateArena;
 	private EditText etNickname;
 	private EditText etEmail;
+	private EditText etPassword;
 	private Spinner spArenasConfig;
 
     @Override
@@ -25,6 +27,7 @@ public class Config extends Activity {
         etCreateArena = (EditText) findViewById(R.id.etArenaConfig);
         etNickname = (EditText) findViewById(R.id.etNickname);
         etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword = (EditText) findViewById(R.id.etPassword);
         spArenasConfig = (Spinner) findViewById(R.id.spArenasConfig);
         
         try{
@@ -124,4 +127,42 @@ public class Config extends Activity {
         	Toast.makeText(this, "Email atualizado para: " + email, Toast.LENGTH_LONG).show();
         }
     }    
+    
+    public void updatePassword(View view){
+    	switch (view.getId()) {
+        case R.id.btUpdatePassword:        	
+        	String password = etPassword.getText().toString().trim();
+        	
+        	if(password.equalsIgnoreCase("")){
+        		String mensagem = "Você precisa inserir uma nova senha";
+         	   	Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
+            	return;
+        	} else if (password.length() < 4){
+        		String mensagem = "A senha precisa ter ao menos 4 caracteres";
+         	   	Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_LONG).show();
+            	return;        		
+        	}
+        	String current_password = SaveScore.getPassword();
+        	
+        	SaveScore.setPassword(password);
+        	
+        	if(current_password == null){
+        		Toast.makeText(this, "Senha atualizada para: " + password, Toast.LENGTH_LONG).show();
+        	} else {
+        		Toast.makeText(this, "Senha atualizada de " + current_password + " para: " + password, Toast.LENGTH_LONG).show();
+        	}
+        }
+    }
+    
+    public void openMenu(View view){
+        switch (view.getId()) {
+        case R.id.ivMenu:
+        	openOptionsMenu();
+        }
+    }
+    
+    public void openConfig(View view){
+	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+	    	startActivity(nextScreen);
+    }
 }

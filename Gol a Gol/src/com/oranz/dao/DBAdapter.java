@@ -13,54 +13,62 @@ import android.util.Log;
 
 public class DBAdapter 
 { 
-    public static final String KEY_ROWID = "_id";
-    public static final String KEY_NICKNAME = "nickname";
-    public static final String KEY_FULLNAME = "fullname";
-    public static final String KEY_DATE_CREATED = "date_created";
-    public static final String KEY_USER_ID = "user_id";
-
-    public static final String KEY_ROWID2 = "_id";
-    public static final String KEY_NM_ARENA = "nm_arena";
-    
-    public static final String KEY_ROWID3 = "_id";
-    public static final String KEY_ARENA_ID = "arena_id";
-    public static final String KEY_SCORE_QUANTITY = "score_quantity";
-    public static final String KEY_SCORE_DATE = "score_date";
-    public static final String KEY_USER_ID2 = "user_id";
-    
-    private static final String TAG = "DBAdapter";
-    
-    private static final String DATABASE_NAME = "gol_a_gol";
-    private static final String DATABASE_TABLE = "register";
-    private static final String DATABASE_TABLE2 = "arena";
-    private static final String DATABASE_TABLE3 = "score";
-    private static final String DATABASE_TABLE4 = "friends";
+    private static final String TAG = "DBAdapter";    
     
     private static final int DATABASE_VERSION = 1;
+    
+    private static final String DATABASE_NAME = "gol_a_gol";
+    private static final String DATABASE_TABLE_REGISTER = "register";
+    private static final String DATABASE_TABLE_ARENA = "arena";
+    private static final String DATABASE_TABLE_SCORE = "score";
+    private static final String DATABASE_TABLE_FRIENDS = "friends";
+    private static final String DATABASE_TABLE_PASSWORD = "user_password";
+	
+    public static final String TABLE_REGISTER_KEY_ROWID = "_id";
+    public static final String TABLE_REGISTER_KEY_NICKNAME = "nickname";
+    public static final String TABLE_REGISTER_KEY_EMAIL = "fullname"; // email!!
+    public static final String TABLE_REGISTER_KEY_DATE_CREATED = "date_created";
+    public static final String TABLE_REGISTER_KEY_USER_ID = "user_id";
+
+    public static final String TABLE_ARENA_KEY_ROWID = "_id";
+    public static final String TABLE_ARENA_KEY_NM_ARENA = "nm_arena";
+    
+    public static final String TABLE_SCORE_KEY_ROWID = "_id";
+    public static final String TABLE_SCORE_KEY_ARENA_ID = "arena_id";
+    public static final String TABLE_SCORE_KEY_SCORE_QUANTITY = "score_quantity";
+    public static final String TABLE_SCORE_KEY_SCORE_DATE = "score_date";
+    public static final String TABLE_SCORE_KEY_USER_ID = "user_id";
+    
+    public static final String TABLE_PASSOWRD_KEY_USER_EMAIL = "email";
+    public static final String TABLE_PASSWORD_KEY_PASSWORD = "passwd";
 
     private static final String DATABASE_CREATE =
-        "create table if not exists register(_id integer primary key autoincrement, "
+        "create table if not exists " + DATABASE_TABLE_REGISTER + " (_id integer primary key autoincrement, "
         + "nickname text not null," 
-        + "fullname text," 
+        + "fullname text not null," // email !! 
         + "date_created int not null,"
         + "user_id integer);";
     
     private static final String DATABASE_CREATE2 =
-        "create table if not exists arena (_id integer primary key autoincrement, "
+        "create table if not exists " + DATABASE_TABLE_ARENA + " (_id integer primary key autoincrement, "
         + "nm_arena text not null);";
     
     private static final String DATABASE_CREATE3 =
-            "create table if not exists score(_id integer primary key autoincrement, "
+            "create table if not exists " + DATABASE_TABLE_SCORE + "(_id integer primary key autoincrement, "
             + "arena_id integer not null," 
             + "score_quantity integer not null,"
             + "score_date int not null,"
             + "user_id integer);";
 
     private static final String DATABASE_CREATE4 =
-            "create table if not exists friends(_id integer primary key autoincrement, "
+            "create table if not exists " + DATABASE_TABLE_FRIENDS + "(_id integer primary key autoincrement, "
             + "friend_id integer not null,"
             + "friend_score_quantity integer not null,"
             + "date_created int not null);";
+
+    private static final String DATABASE_CREATE5 =
+            "create table if not exists " + DATABASE_TABLE_PASSWORD + "(email text not null, "
+            + "passwd text not null);";
     
     private final Context context;  
     
@@ -88,6 +96,7 @@ public class DBAdapter
             db.execSQL(DATABASE_CREATE2);
             db.execSQL(DATABASE_CREATE3);
             db.execSQL(DATABASE_CREATE4);
+            db.execSQL(DATABASE_CREATE5);
         }
 
         @Override
@@ -95,20 +104,22 @@ public class DBAdapter
             Log.w(TAG, "Upgrading database from version " + oldVersion 
                   + " to "
                   + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_REGISTER);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ARENA);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SCORE);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_FRIENDS);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_PASSWORD);
             onCreate(db);
         }
     }    
     
     public void dropTables(){
     	this.open();
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_REGISTER);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ARENA);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SCORE);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_FRIENDS);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_PASSWORD);
         this.close();
     }
     
@@ -129,8 +140,8 @@ public class DBAdapter
     	long retorno = 0;
     	try{
 	        ContentValues initialValues = new ContentValues();
-	        initialValues.put(KEY_NM_ARENA, nm_arena);
-	        retorno = db.insert(DATABASE_TABLE2, null, initialValues);
+	        initialValues.put(TABLE_ARENA_KEY_NM_ARENA, nm_arena);
+	        retorno = db.insert(DATABASE_TABLE_ARENA, null, initialValues);
         }catch(Exception e){
         	e.printStackTrace();
         }finally{
@@ -142,23 +153,23 @@ public class DBAdapter
     //---deletes a particular title---
     public boolean deleteArena(long rowId) 
     {
-        return db.delete(DATABASE_TABLE2, KEY_ROWID2 + "=" + rowId, null) > 0;
+        return db.delete(DATABASE_TABLE_ARENA, TABLE_ARENA_KEY_ROWID + "=" + rowId, null) > 0;
     }
     
     public boolean deleteArena(String nm_arena) 
     {
-        return db.delete(DATABASE_TABLE2, KEY_NM_ARENA + "='" + nm_arena + "'", null) > 0;
+        return db.delete(DATABASE_TABLE_ARENA, TABLE_ARENA_KEY_NM_ARENA + "='" + nm_arena + "'", null) > 0;
     }
         
     public int deleteAllArenas(){
-    	return db.delete(DATABASE_TABLE2, "_id > 0", null);
+    	return db.delete(DATABASE_TABLE_ARENA, "_id > 0", null);
     }
     
     public Cursor getAllArenas() 
     {
-        return db.query(DATABASE_TABLE2, new String[] {
-        		KEY_ROWID2, 
-        		KEY_NM_ARENA}, 
+        return db.query(DATABASE_TABLE_ARENA, new String[] {
+        		TABLE_ARENA_KEY_ROWID, 
+        		TABLE_ARENA_KEY_NM_ARENA}, 
                 null, 
                 null, 
                 null, 
@@ -188,12 +199,12 @@ public class DBAdapter
     	return 0;
     }
 
-	public long insertNickname(String nickname, String fullname){
+	public long insertNickname(String nickname, String email){
     	long retorno = 0;
     	try{
     		Date date_created = new Date();
     		long timeMilliseconds = date_created.getTime();
-    		db.execSQL("INSERT INTO "+DATABASE_TABLE+" (nickname, fullname, date_created) VALUES ('"+ nickname +"','"+ fullname +"'," + timeMilliseconds + ") ");
+    		db.execSQL("INSERT INTO " + DATABASE_TABLE_REGISTER + " (nickname, fullname, date_created) VALUES ('"+ nickname +"','"+ email +"'," + timeMilliseconds + ") ");
         }catch(Exception e){
         	e.printStackTrace();
         }finally{
@@ -204,11 +215,11 @@ public class DBAdapter
     
     public Cursor getRegister() 
     {
-        return db.query(DATABASE_TABLE, new String[] {
-        		KEY_ROWID, 
-        		KEY_NICKNAME,
-        		KEY_FULLNAME,
-        		KEY_USER_ID}, 
+        return db.query(DATABASE_TABLE_REGISTER, new String[] {
+        		TABLE_REGISTER_KEY_ROWID, 
+        		TABLE_REGISTER_KEY_NICKNAME,
+        		TABLE_REGISTER_KEY_EMAIL, // email !!
+        		TABLE_REGISTER_KEY_USER_ID}, 
                 null, 
                 null, 
                 null, 
@@ -240,7 +251,7 @@ public class DBAdapter
     		Date date_created = date.getTime();
     		long timeMilliseconds = date_created.getTime();
     		this.open();
-    		db.execSQL("INSERT INTO "+DATABASE_TABLE3+" (arena_id, score_quantity, score_date, user_id) VALUES ("+ id_arena +"," + quantity + ", " + timeMilliseconds+ ", " + user_id +") ");
+    		db.execSQL("INSERT INTO "+DATABASE_TABLE_SCORE+" (arena_id, score_quantity, score_date, user_id) VALUES ("+ id_arena +"," + quantity + ", " + timeMilliseconds+ ", " + user_id +") ");
         }catch(Exception e){
         	e.printStackTrace();
         }finally{
@@ -253,7 +264,7 @@ public class DBAdapter
     	long retorno = 0;
     	try{
     		this.open();
-    		String query = "UPDATE "+DATABASE_TABLE3+" SET score_quantity = " + quantity + " WHERE _id = '" + cd_score + "'";  
+    		String query = "UPDATE "+DATABASE_TABLE_SCORE+" SET score_quantity = " + quantity + " WHERE _id = '" + cd_score + "'";  
     		db.execSQL(query);
         }catch(Exception e){
         	e.printStackTrace();
@@ -266,24 +277,65 @@ public class DBAdapter
     public boolean updateRegister(String nickname, String email) 
     {
         ContentValues args = new ContentValues();
-        args.put(KEY_NICKNAME, nickname);
-        args.put(KEY_FULLNAME, email);
-        return db.update(DATABASE_TABLE, args, KEY_ROWID + ">" + 0, null) > 0;
+        args.put(TABLE_REGISTER_KEY_NICKNAME, nickname);
+        args.put(TABLE_REGISTER_KEY_EMAIL, email);
+        return db.update(DATABASE_TABLE_REGISTER, args, TABLE_REGISTER_KEY_ROWID + ">" + 0, null) > 0;
+    }    
+
+    public String getPassword(){
+    	String passwd = "";
+    	try{
+    		this.open();
+	    	Cursor cursor = db.rawQuery("SELECT * FROM user_password", null);
+	    	cursor.moveToFirst();
+	    	passwd = cursor.getString(cursor.getColumnIndex(TABLE_PASSWORD_KEY_PASSWORD));
+	    	cursor.close();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    		this.close();
+    	}
+    	return passwd;
     }
-	
+    
+    public boolean updatePassword(String email, String passwd){
+    	try{
+    		String query = "UPDATE " + DATABASE_TABLE_PASSWORD + " SET " + TABLE_PASSWORD_KEY_PASSWORD + " = " + passwd + " WHERE " + TABLE_PASSOWRD_KEY_USER_EMAIL + " = '" + email + "'";
+    		db.execSQL(query);
+    		return true;
+        }catch(Exception e){
+        	e.printStackTrace();
+        	return false;
+        }finally{
+        	this.close();
+        }
+    }
+
+	public boolean insertPassword(String email, String passwd){
+    	try{
+    		String query = "INSERT INTO " + DATABASE_TABLE_PASSWORD + " (" + TABLE_PASSOWRD_KEY_USER_EMAIL +"," + TABLE_PASSWORD_KEY_PASSWORD + ") VALUES ('" + email + "','" + passwd + "')";
+    		db.execSQL(query);
+    		return true;
+        }catch(Exception e){
+        	e.printStackTrace();
+        	return false;
+        }finally{
+        	this.close();
+        } 
+    }
+    
 	public boolean deleteScore(String cd_score) 
     {
-        return db.delete(DATABASE_TABLE3, KEY_ROWID3 + "=" + cd_score, null) > 0;
+        return db.delete(DATABASE_TABLE_SCORE, TABLE_SCORE_KEY_ROWID + "=" + cd_score, null) > 0;
     }
     
     public Cursor getAllScores() 
     {
-        return db.query(DATABASE_TABLE3, new String[] {
-        		KEY_ROWID3,
-                KEY_ARENA_ID,
-                KEY_SCORE_QUANTITY,
-                KEY_SCORE_DATE,
-                KEY_USER_ID2}, 
+        return db.query(DATABASE_TABLE_SCORE, new String[] {
+        		TABLE_SCORE_KEY_ROWID,
+                TABLE_SCORE_KEY_ARENA_ID,
+                TABLE_SCORE_KEY_SCORE_QUANTITY,
+                TABLE_SCORE_KEY_SCORE_DATE,
+                TABLE_SCORE_KEY_USER_ID}, 
                 null, 
                 null, 
                 null, 

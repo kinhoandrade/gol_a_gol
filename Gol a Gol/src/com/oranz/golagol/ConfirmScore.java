@@ -12,7 +12,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.facebook.Session;
-import com.facebook.model.GraphUser;
 
 public class ConfirmScore extends Activity {
 	
@@ -22,7 +21,7 @@ public class ConfirmScore extends Activity {
 	private Button btCancel;
 	private Button btOk;
 	private ToggleButton tbPostOnFb;
-	private GraphUser fbUser;
+	//private GraphUser fbUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,13 +83,16 @@ public class ConfirmScore extends Activity {
       	nextScreen.putExtra("origin", "main");
     	startActivity(nextScreen);
 	}
-	
-    public void openConfig(View view){
+    
+    public void openMenu(View view){
         switch (view.getId()) {
-        case R.id.ivConfig:	    	
-	    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
-	    	startActivity(nextScreen);
+        case R.id.ivMenu:
+        	openOptionsMenu();
         }
     }
     
+    public void openConfig(View view){
+    	Intent nextScreen = new Intent(getApplicationContext(), Config.class);	    	
+    	startActivity(nextScreen);
+    }    
 }
