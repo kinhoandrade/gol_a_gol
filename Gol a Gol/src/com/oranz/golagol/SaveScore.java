@@ -52,7 +52,7 @@ public class SaveScore extends Activity {
 	private static String passwd;
 	
 	private static Context appContext;
-	private static String fbId = "318684344914920"; 
+	private static String fbId = "318684344914920";
 	
     @SuppressLint("NewApi")
 	@Override
@@ -380,20 +380,27 @@ public class SaveScore extends Activity {
 				cd_to_update = score.getCd_score();
 			}
 			System.out.println(myCal.getTimeInMillis());
-		}
-    	
+		}    	
 
 		System.out.println(date.getTimeInMillis());
     	
     	if(validator == true){
 	        db.registerScore(arena, quantity, date);	        
-			Toast.makeText(appContext,"Gols gravados com sucesso!", Toast.LENGTH_LONG).show();
+			Toast.makeText(appContext,"Gols gravados com sucesso!", Toast.LENGTH_SHORT).show();
 	        db.close();
     	} else {
     		db.updateScore(quantity, cd_to_update);
-    		Toast.makeText(appContext,"Gols atualizados.", Toast.LENGTH_LONG).show();
+    		Toast.makeText(appContext,"Gols atualizados.", Toast.LENGTH_SHORT).show();
 	        db.close();
     	}
+    }
+    
+    public static boolean insertScore(String arena, int quantity, Calendar date){
+    	// TO-DO: melhorar a validação do score pra ser feito no DBAdapter, antes do insert
+    	db.open();
+        db.registerScore(arena, quantity, date);
+        db.close();
+        return true;
     }
     
     public static List<Score> getAllScores(){

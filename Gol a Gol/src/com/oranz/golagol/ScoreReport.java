@@ -24,7 +24,13 @@ public class ScoreReport extends Activity {
         tvLast7days = (TextView) findViewById(R.id.tvLast7DaysResult);
         tvLast15days = (TextView) findViewById(R.id.tvLast15DaysResult);
         
-        int total = SaveScore.getTotal(0);
+        refreshReport();
+        
+        btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
+    }
+    
+    public boolean refreshReport(){
+    	int total = SaveScore.getTotal(0);
         tvTotal.setText("" + total);
         
         int last7days = SaveScore.getTotal(7);
@@ -33,7 +39,7 @@ public class ScoreReport extends Activity {
         int last15days = SaveScore.getTotal(15);
         tvLast15days.setText("" + last15days);
         
-        btClose.setOnClickListener(new View.OnClickListener() {public void onClick(View arg0) {finish();}});
+        return true;
     }
 
     @Override

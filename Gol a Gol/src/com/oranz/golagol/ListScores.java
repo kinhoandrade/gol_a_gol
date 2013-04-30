@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class ListScores extends Activity {
         listView = (ListView) findViewById(R.id.listScores);
         
         scoresText = new ArrayList<String>();
+        scoresText.add("Email;Data;Arena;Quantity");
         email = SaveScore.getEmail();
         
         notes = new SimpleAdapter( 
@@ -112,7 +115,7 @@ public class ListScores extends Activity {
   	  item.put( "id", id);
   	  list.add( item );
       notes.notifyDataSetChanged();
-      scoresText.add("email:" + email.trim() + ";date:" + date + ";arena:" + arena.replace(";", ".").replace(":","-").trim() + ";quantity:" + quantity);
+      scoresText.add(email.trim() + ";" + date + ";" + arena.replace(";", ".").replace(":","-").trim() + ";" + quantity);
   	}
     
 	public void filteredList(){
@@ -203,34 +206,38 @@ public class ListScores extends Activity {
     
     @SuppressWarnings("resource")
 	public boolean importFile(final String fileCompletePath){
-
     	AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ListScores.this);
        	myAlertDialog.setTitle("Importar registros");
        	myAlertDialog.setMessage("Deseja importar os registros do arquivo " + fileCompletePath + "?");
        	myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
        		public void onClick(DialogInterface arg0, int arg1) {
                 Toast.makeText(getApplicationContext(), "Importando\n" + fileCompletePath, Toast.LENGTH_LONG).show();
-		    	//Find the directory for the SD Card using the API
-		    	//*Don't* hardcode "/sdcard"
-		    	//File sdcard = Environment.getExternalStorageDirectory();
 		
 		    	File file = new File(fileCompletePath);
-		
-		    	//Read text from file
-		    	StringBuilder text = new StringBuilder();
+
 		    	try {
 		    	    BufferedReader br = new BufferedReader(new FileReader(file));
 		    	    String line;
-		
+		    	    line = br.readLine();
 		    	    while ((line = br.readLine()) != null) {
-		    	        text.append(line);
-		    	        text.append('\n');
+		    	        String[] scoreText = line.split(";");
+		    	        
+		    	        String date = scoreText[1];
+		    	        String arena = scoreText[2];
+		    	        String quantity = scoreText[3];
+		    	        Date formattedDate = formatStringToDate(date);
+		    	        Calendar cal=Calendar.getInstance();
+		    	        cal.setTime(formattedDate);
+		    	        //SaveScore.insertScore(arena[1], Integer.parseInt(quantity[1]), cal);
+		    	        SaveScore.registerScoreConfirmed(arena, Integer.parseInt(quantity), cal);
 		    	    }
 		    	}
 		    	catch (IOException e) {
 		    	    e.printStackTrace();
 		    	}
-       			Toast.makeText(getApplicationContext(), "Arquivo importado.\n" + text, Toast.LENGTH_LONG).show();
+		    	
+       			Toast.makeText(getApplicationContext(), "Arquivo importado.", Toast.LENGTH_LONG).show();
+       			refreshList();
        	}});
        	myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {       	       
        		public void onClick(DialogInterface arg0, int arg1) { }});
@@ -239,4 +246,17 @@ public class ListScores extends Activity {
     	    	
     	return false;
     }    
+    
+    public Date formatStringToDate(String date){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date formattedDate = new Date();
+        try {
+        	formattedDate = df.parse(date);
+            String newDateString = df.format(formattedDate);
+            System.out.println(newDateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return formattedDate;
+    }
 }
